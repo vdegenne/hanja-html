@@ -1,0 +1,25 @@
+<html !doctype>
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id=card>
+    <div id="card-wrapper">
+      <p>Sur le plan étymologique, les caractères 동, 종 et 중 partagent des points communs.</p>
+      <div id="separator"></div>
+      <p>Par exemple le caractère chinois 重 "important", "sérieux", "attacher de l'importance" est simplifié en 동 et 중.</p>
+      <p>On retrouve ce caractère en tant que radical dans 動 "mettre en mouvement" simplifié en 동, dans le caractère 種 "sorte", "genre", "type" simplifié en 종, ainsi que dans 衝 "foncer", "aller de l'avant" ce dernier se simplifiant en 충 et 종.</p>
+      <div id="separator"></div>
+      <p>De même pour le caractère chinois 童 "enfant" simplifié en 동 et 종. On retrouve ce dernier dans la composition 鐘 "cloche" simplifié en 종.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { decorateContent } from './util.js';
+
+    window.addEventListener('load', () => decorateContent(document.getElementById('card-wrapper')));
+  </script>
+</body>
+</html>

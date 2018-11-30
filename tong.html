@@ -1,0 +1,26 @@
+<html !doctype>
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id=card>
+    <div id="card-wrapper">
+      <p class="header">Les mots 통상 et 통속 expriment deux idées différentes mais leurs constructions étymologiques partagent un point logique commun.</p>
+      <div id="separator"></div>
+      <p>Le mot 통상 signifie "habituellement", "ordinairement", "généralement" et se traduit par le chinois 通常.</p>
+      <p>Le mot 통속 signifie "populaire" et se traduit par le chinois 通俗.</p>
+      <div id="separator"></div>
+      <p>Dans les deux mots on retrouve le caractère 通 (통)</p>
+      <p>De même pour le caractère chinois 童 "enfant" simplifié en 동 et 종. On retrouve ce dernier dans la composition 鐘 "cloche" simplifié en 종.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { decorateContent } from './util.js';
+
+    window.addEventListener('load', () => decorateContent(document.getElementById('card-wrapper')));
+  </script>
+</body>
+</html>
