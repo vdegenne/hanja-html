@@ -1,3 +1,6 @@
 {
-  "html.format.enable": false
+  "html.format.enable": false,
+  "editor.formatOnSave": false,
+  "editor.formatOnPaste": false,
+  "files.autoSave": "onWindowChange"
 }

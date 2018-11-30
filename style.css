@@ -4,23 +4,26 @@
 }
 html {
   font-family: Roboto;
-  font-size: 1.3em;
+  font-size: 1.5em;
   /* text-align: justify; */
   line-height: 35px;
+  background: black;
 }
 #card {
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 640px;
   height: 640px;
-  border: 1px solid rgba(0, 0, 0, .1);
+  /* border: 1px solid rgba(0, 0, 0, .1); */
 
   margin: 40px auto;
-  padding: 50px;
+  padding: 50px 40px;
 
   box-sizing: border-box;
+  background: #fff;
 }
 
 .korean {
@@ -67,22 +70,64 @@ html {
   content: '»';
 }
 
-#separator {
+/* .separator {
   text-align: center;
-  /* margin-bottom: 1px solid black; */
   height: 1px;
   background: #bdbdbd;
   margin: 20px auto;
-  /* box-sizing: border-box; */
   width: 200px;
+} */
+
+.separator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 1px;
+  margin: 26px auto;
+  background: #b1b1b1;
+  width: 130px;
+  color: #b1b1b1;
+}
+.separator:before {
+  /* content: '𝄪'; */
+  content: '♢';
+  height: 34px;
+  background: #fff;
+  padding: 0 8px;
 }
 
 p {
   margin: 3px 0;
 }
 
+#corner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  top: 5px;
+  left: 10px;
+  font-size: 12px;
+  color: #c1c1c1;
+  border: 1px solid #d8d8d8;
+  border-radius: 5px;
+  height: 26px;
+  padding: 0 8px;
+  background: #fff;
+}
+
 .header {
   font-style: italic;
-  font-size: .9em;
+  font-size: 16px;
   color: grey;
+
+  margin: 0px 0 40px;
+  padding-left: 20px;
+
+  border-left: 5px solid #fff176;
+
+  position: relative;
+  left: -10px;
+  top: 14px;
 }

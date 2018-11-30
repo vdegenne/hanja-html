@@ -1,0 +1,27 @@
+<html !doctype>
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id=card>
+    <p id="corner">commutative #1</p>
+    <p class="header">과학 et 학과 sont construits à partir des mêmes étymologies chinoises mais leur sens diffère du fait de leur commutation.</p>
+    <div id="card-wrapper">
+      <!-- <div class="separator"></div> -->
+      <p>과학 (科學) signifie "science".</p>
+      <p>학과 (學科) signifie "section" "formation" "branche", "cursus".</p>
+      <div class="separator"></div>
+      <p>科 a pour sens "un domaine" "une branche" "une division" "une famille" et a pour analogie les branches d'un arbre. 🌳</p>
+      <div class="separator"></div>
+      <p>學 a pour premier sens "enseigner" et "apprendre" et a pour sens secondaire "la science".<br>Il peut être simplifié en 学. 👨‍🎓</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { decorateContent } from './util.js';
+    window.addEventListener('load', () => decorateContent(document.getElementById('card')));
+  </script>
+</body>
+</html>
