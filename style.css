@@ -4,7 +4,7 @@
 }
 html {
   font-family: Roboto;
-  font-size: 1.5em;
+  font-size: 21px;
   /* text-align: justify; */
   line-height: 35px;
   background: black;
@@ -26,11 +26,13 @@ html {
   background: #fff;
 }
 
+
+
 .korean {
   font-family: NanumSquare;
   font-weight: bold;
   color: #2b6eb5;
-  margin: 0 3px 0 4px;
+  margin: 0 0px 0 0px;
 }
 
 .korean0 {
@@ -48,6 +50,12 @@ html {
 .korean4 {
   color: #ab47bc;
 }
+
+.neutral > .korean {
+  color: inherit !important;
+}
+
+
 
 .chinese {
   font-family: "Microsoft YaHei";
@@ -129,5 +137,5 @@ p {
 
   position: relative;
   left: -10px;
-  top: 14px;
+  top: 24px;
 }

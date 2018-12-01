@@ -1,0 +1,26 @@
+<html !doctype>
+<head>
+  <meta charset="utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id=card>
+    <p id="corner">confusion #1</p>
+    <p class="header">Les caractères 入 et 人 se ressemblent mais ont deux sens différents.</p>
+    <div id="card-wrapper">
+      <!-- <div class="separator"></div> -->
+      <p>入 (입) est un verbe et signifie "entrer", "aller dans" comme par exemple dans 입<span class="neutral">문</span> "une entrée" ou <span class="neutral">주</span>입 "une injection"</p>
+      <p>Le deuxième trait démarre en haut un peu à gauche pour descendre ensuite à droite, ce qui donne une petite vague sur la tête du caractère.</p>
+      <div class="separator"></div>
+      <p>人 (인) est un nom et signifie "une personne", "un homme". Il est beaucoup placé en fin de mot pour exprimer le genre d'une personne. Par exemple <span class="neutral">악</span>인 "un(e) méchant(e)", <span class="neutral">연</span>인 "un(e) amoureux(se)" ou encore <span class="neutral">상</span>인 "une commerçant(e)"</p>
+      <p>Le premier trait démarre d'en haut pour virer sur la gauche. Ce qui donne un caractère plus symétrique que 入.</p>
+    </div>
+  </div>
+
+  <script type="module">
+    import { decorateContent } from './util.js';
+    window.addEventListener('load', () => decorateContent(document.getElementById('card')));
+  </script>
+</body>
+</html>
