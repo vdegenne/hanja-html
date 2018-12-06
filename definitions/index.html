@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+  <head>
+    <style>
+    @font-face {
+      font-family: 'NanumSquare';
+      src: url(../fonts/NanumSquareR.ttf) format('truetype');
+    }
+    </style>
+  </head>
+  <body>
+    <div id="content" style="margin-top:40px"></div>
+  </body>
+  <script type="module">
+    import * as definition from './definitions.js';
+    import {render} from "../node_modules/lit-html/lit-html.js";
+
+    render(
+      definition.getWordTemplate(definition.어리둥절하다),
+      document.getElementById('content')
+    );
+  </script>
+</html>
