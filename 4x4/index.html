@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+
+<head>
+    <style>
+      @font-face {
+        font-family: 'NanumSquare';
+        src: url(../fonts/NanumSquareR.ttf) format('truetype');
+      }
+    </style>
+</head>
+
+<body>
+  <style>
+    #content {
+      display: flex;
+      flex-wrap: wrap;
+      /* background: grey; */
+      width: 640px;
+      height: 640px;
+
+      margin: 0 auto;
+      
+      padding: 40px;
+      box-sizing: border-box;
+    }
+
+    #content[hanja] .case .hangul {
+      display: none;
+    }
+    #content[hangul] .case .hanja,
+    #content[hangul] .case .colors {
+      display: none;
+    }
+  </style>
+  <div id="content" hanja onclick="testyo(this)"></div>
+
+  <script type="module">
+    import { hanja4x4table } from "../util.js";
+    import { render } from '../node_modules/lit-html/lit-html.js';
+    import {table2} from './tables.js';
+    
+    render(hanja4x4table(table2), document.getElementById('content'));
+  </script>
+
+  <script>
+    const testyo = (el) => {
+      if (el.hasAttribute('hanja')) {
+        el.removeAttribute('hanja');
+        el.setAttribute('hangul', '');
+      }
+      else {
+        el.removeAttribute('hangul');
+        el.setAttribute('hanja', '');
+      }
+    }
+  </script>
+</body>
+
+</html>
