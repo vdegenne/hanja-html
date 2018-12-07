@@ -9,12 +9,17 @@
     </style>
     <div id="content"></div>
     <script type="module">
-      import * as confusion from './confusions.js';
+      import {render, createConfusionCard} from './confusions.js';
+      import {decorateContent} from '../util.js';
 
-      confusion.render(
-        confusion.createConfusionCard(confusion.confusion1),
-        document.getElementById('content')
+      const content = document.getElementById('content');
+
+      render(
+        createConfusionCard("confusion1"),
+        content
       );
+
+      decorateContent(content);
     </script>
   </body>
 </html>
