@@ -25,6 +25,25 @@ export const table2 = [
   { hj: '壁', hg: '벽', type: 'n' },
 ];
 
+// 喜歡數字已經去世杯買覺得值圖書館
+export const table3 = [
+  { hj: '喜', hg: '희', type: 'vn' },
+  { hj: '歡', hg: '환', type: 'j' },
+  { hj: '數', hg: '수', type: 'an' }, // 수숫삭촉
+  { hj: '字', hg: '자', type: 'n' },
+  { hj: '已', hg: '이', type: 'a' },
+  { hj: '經', hg: '경', type: 'vn' },
+  { hj: '去', hg: '거', type: 'vj' },
+  { hj: '世', hg: '세', type: 'n' },
+  { hj: '杯', hg: '배', type: 'vnj' },
+  { hj: '買', hg: '매', type: 'v' },
+  { hj: '覺', hg: '각', type: 'v' }, // 각교
+  { hj: '得', hg: '득', type: 'v' },
+  { hj: '值', hg: '치', type: 'nj' },
+  { hj: '圖', hg: '도', type: 'nv' },
+  { hj: '書', hg: '서', type: 'nv' },
+  { hj: '館', hg: '관', type: 'n' },
+];
 
 export const hanja4x4table = (table) => {
   if (table.length !== 16) {
@@ -43,11 +62,20 @@ export const hanja4x4table = (table) => {
       box-sizing: border-box;
 
       /* background: red; */
+
+      /* border: 1px solid grey; */
+
+      position: relative;
+      top:-10px;
+      left: -5px;
     }
     .hanja {
-      font-size: 5em;
+      font-size: 5.3em;
       font-family: 'UD Digi Kyokasho NK-R';
       color: #252525;
+
+      height: 85px;
+      line-height: 85px;
     }
     .hangul {
       font-size: 4em;
