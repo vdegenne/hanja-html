@@ -11,26 +11,36 @@ export const chineseRegExp = /([\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA
 
 export const koreanRegExp = /([\uac00-\ud7af]|[\u1100-\u11ff]|[\u3130-\u318f]|[\ua960-\ua97f]|[\ud7b0-\ud7ff])+/;
 
-export const decorateContent = (content) => {
-  let html = content.innerHTML;
-  /* wrap korean */
-  html = html.replace(new RegExp(koreanRegExp, 'g'), (match) => {
-    let index;
-    if ((index = _hangeulClasses.indexOf(match)) < 0) {
-      index = _hangeulClasses.length;
-      _hangeulClasses.push(match);
-    }
-    return `<span class="korean korean${index}">${match}</span>`
-  });
-  /* wrap chinese */
-  html = html.replace(new RegExp(chineseRegExp, 'g'), match => `<span class="chinese">${match}</span>`);
-  /* wrap definition */
-  html = html.replace(/=\"([^"]+)\"|(\"[^"]+\")/g, (match, group, a) => {
-    if (group) return match;
-    // if (group)
-    return `<span class="definition"> ${match.slice(1, -1)} </span>`
-  });
-  content.innerHTML = html;
-}
+export const decorateContent = (content) => content.innerHTML = decorateHTML(content.innerHTML);
 
 const _hangeulClasses = [];
+
+export const decorateHTML = (html, korean = true, chinese = true, definitions = true) => {
+  /* korean characters */
+  if (korean) {
+    html = html.replace(new RegExp(koreanRegExp, 'g'), (match) => {
+      let index;
+      if ((index = _hangeulClasses.indexOf(match)) < 0) {
+        index = _hangeulClasses.length;
+        _hangeulClasses.push(match);
+      }
+      return `<span class="korean korean${index}">${match}</span>`
+    });
+  }
+
+  /* chinese characters */
+  if (chinese) {
+    html = html.replace(new RegExp(chineseRegExp, 'g'), match => `<span class="chinese">${match}</span>`);
+  }
+
+  /* definitions */
+  if (definitions) {
+    html = html.replace(/=\"([^"]+)\"|(\"[^"]+\")/g, (match, group, a) => {
+      if (group) return match;
+      // if (group)
+      return `<span class="definition"> ${match.slice(1, -1)} </span>`
+    });
+  }
+
+  return html;
+}
