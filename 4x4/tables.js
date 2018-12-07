@@ -91,9 +91,9 @@ export const hanja4x4table = (table) => {
       font-size: 3em;
     }
     .colors > span {
-      height: 1px;
+      height: 0px;
       position: relative;
-      top: -4px;
+      top: -6px;
     }
     .a {
       color: orange;
