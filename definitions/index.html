@@ -1,22 +1,19 @@
 <!doctype html>
 <html>
   <head>
-    <style>
-    @font-face {
-      font-family: 'NanumSquare';
-      src: url(../fonts/NanumSquareR.ttf) format('truetype');
-    }
-    </style>
+    <link rel="stylesheet" href="../fonts/fonts.css">
   </head>
   <body>
     <div id="content" style="margin-top:40px"></div>
+
+    <p class="tags" style="width:500px;margin:0 auto;">#정의#맞팔#선팔#coréen#korean#korea#languages#한글#어학#언어#한국어#디자인#공부스타#공부#공부스타그램</p>
   </body>
   <script type="module">
     import * as definition from './definitions.js';
     import {render} from "../node_modules/lit-html/lit-html.js";
 
     render(
-      definition.getWordTemplate(definition.어리둥절하다),
+      definition.getWordTemplate(definition.감추다),
       document.getElementById('content')
     );
   </script>

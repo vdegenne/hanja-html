@@ -3,7 +3,17 @@ import {html} from "../node_modules/lit-html/lit-html.js";
 export const 어리둥절하다 = {
   name: '어리둥절하다',
   type: '형용사',
-  definition: '무슨 영문인지 잘 몰라서 얼떨떨하다.'
+  definition: ['무슨 영문인지 잘 몰라서 얼떨떨하다.']
+}
+
+export const 감추다 = {
+  name: '감추다',
+  type: '동사',
+  definition: [
+    '남이 보거나 찾아내지 못하도록 가리거나 숨기다.',
+    '어떤 사실이나 감정 따위를 남이 모르게 하다.',
+    '어떤 사물이나 현상 따위가 없어지거나 사라지다.'
+  ]
 }
 
 
@@ -20,10 +30,9 @@ export const getWordTemplate = (word) => html`
       height: 640px;
       margin: 0 auto;
 
-      /* border: 1px solid black; */
+      border: 1px solid black;
 
       font-family: NanumSquare;
-      font-size: 1.8em;
       -webkit-font-smoothing: subpixel-antialiased;
     }
 
@@ -40,32 +49,45 @@ export const getWordTemplate = (word) => html`
     }
 
     .title {
-      /* font-weight: bold; */
-      margin: 0 0 40px 0;
-      padding: 6px 4px 9px 24px;
-      font-size: 1.6em;
+      text-align: right;
+      margin-bottom: 40px;
+    }
+    .title > span {
+      display: inline-block;
+      padding: 6px 7px 9px 34px;
+      border-radius: 1px;
 
-      background: #4c4c4c;
       color: #fff;
-      border-radius: 2px;
     }
-    .type, .definition {
-      width: 70%;
-    }
+
     .type {
-      font-size: .8em;
       color: #a2a2a2;
-      margin: 0 0 20px;
     }
-    .definition {
-      color: #424242;
+
+    .definitions {
+      padding: 0;
+      list-style-type: none;
+    }
+    .definitions > li {
+      color: #545454;
+      letter-spacing: 0px;
+      margin: 0 0 12px;
+    }
+    li .count {
+      margin-right: 10px;
+      color: #cddc39;
     }
   </style>
   <div class="card">
-    <div class="title">${word.name}</div>
-    <div class="type">[${word.type}]</div>
-    <div class="definition">${word.definition}</div>
-
-    <div style="margin-top:30px;"></div>
+    <div class="card-wrapper">
+      <div class="title" style="font-size:52px;">
+        <span style="background:#004073">${word.name}</span>
+      </div>
+      <div class="type" style="font-size:25px;">[${word.type}]</div>
+      <ol class="definitions" style="font-size:25px;">
+        ${word.definition.map((d, i) => html`<li><span class="count">${i + 1}.</span>${d}</li>`)}
+      </ol>
+    </div>
+    <div style="height:60px"></div>
   </div>
 `;
