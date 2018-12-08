@@ -45,6 +45,28 @@ export const table3 = [
   { hj: '館', hg: '관', type: 'n' },
 ];
 
+// 
+export const table4 = [
+  { hj: '喜', hg: '희환', type: 'vn' },
+  { hj: '歡', hg: '환', type: 'j' },
+  { hj: '數', hg: '수', type: 'an' }, // 수숫삭촉
+  { hj: '字', hg: '자', type: 'n' },
+  { hj: '已', hg: '이', type: 'a' },
+  { hj: '經', hg: '경', type: 'vn' },
+  { hj: '去', hg: '거', type: 'vj' },
+  { hj: '世', hg: '세', type: 'n' },
+  { hj: '杯', hg: '배', type: 'vnj' },
+  { hj: '買', hg: '매', type: 'v' },
+  { hj: '覺', hg: '각', type: 'v' }, // 각교
+  { hj: '得', hg: '득', type: 'v' },
+  { hj: '值', hg: '치', type: 'nj' },
+  { hj: '圖', hg: '도', type: 'nv' },
+  { hj: '書', hg: '서', type: 'nv' },
+  { hj: '館', hg: '관', type: 'n' },
+];
+
+
+
 export const hanja4x4table = (table) => {
   if (table.length !== 16) {
     throw new Error('the table size should be equal to 16');
@@ -83,6 +105,20 @@ export const hanja4x4table = (table) => {
       font-weight: bold;
     }
 
+    .hangul > span {
+      /* padding: 2px; */
+    }
+    .hangul > span:not(:first-of-type):before {
+      content: '•';
+      font-family: Arial;
+      font-weight: 100;
+      font-size: .6em;
+      margin: 0 4px;
+    }
+    .hangul2 {
+      font-size: 3em;
+    }
+
     .colors {
       display: flex;
       justify-content: flex-start;
@@ -111,8 +147,12 @@ export const hanja4x4table = (table) => {
   </style>
   ${table.map(t => html`
   <div class="case">
-    <span class="hangul">${t.hg}</span>
+    <div class="hangul hangul${t.hg.length}">
+      ${t.hg.split('').map(hg => html`<span>${hg}</span>`)}
+    </div>
+
     <span class="hanja">${t.hj}</span>
+
     <div class="colors">
       ${t.type.split('').map(t => html`<span class="${t}">•</span>`)}
     </div>
