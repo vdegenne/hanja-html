@@ -2,32 +2,11 @@
 <html>
 
 <head>
-    <style>
-      @font-face {
-        font-family: 'NanumSquare';
-        src: url(../fonts/NanumSquareR.ttf) format('truetype');
-      }
-    </style>
+  <link rel="stylesheet" href="../fonts/fonts.css">
 </head>
 
 <body>
   <style>
-    #content {
-      display: flex;
-      flex-wrap: wrap;
-      /* background: grey; */
-      width: 640px;
-      height: 640px;
-
-      margin: 0 auto;
-      
-      padding: 25px;
-      box-sizing: border-box;
-
-      /* border: 1px solid #f3f3f3; */
-      border: 1px solid #000;
-    }
-
     #content[hanja] .case .hangul {
       display: none;
     }
@@ -36,32 +15,31 @@
       display: none;
     }
 
+    #content[hangul] .legend {
+      display: none;
+    }
+
     #tags {
       width: 500px;
       margin: 0 auto;
     }
   </style>
-  <div id="content" hanja onclick="testyo(this)"></div>
+  <div id="content" hanja onclick="switchHanjaHangul(this)"></div>
 
-  <p id="tags">.
-노란색 : 동사
-오렌지색 : 부사
-녹색 : 형용사
-블랙 : 명사
-
-#한자#한자어#중국어#한글#coréen#어학#유학#언어#맞팔#공부스타#공부#공부스타그램#문자#漢語#汉语#中國語#中国语#chinese#languages#studying
-  </p>
+  <p id="tags">#한자#한자어#중국어#한글#coréen#어학#유학#언어#맞팔#선팔#공부스타#공부#공부스타그램#문자#漢語#汉语#中國語#中国语#chinese#languages#studying#chinois</p>
 
   <script type="module">
-    import { hanja4x4table } from "./tables.js";
+    import { create4x4Card, table4 } from "./tables.js";
     import { render } from '../node_modules/lit-html/lit-html.js';
-    import {table4} from './tables.js';
     
-    render(hanja4x4table(table4), document.getElementById('content'));
+    render(
+      create4x4Card(table4),
+      document.getElementById('content')
+    );
   </script>
 
   <script>
-    const testyo = (el) => {
+    const switchHanjaHangul = (el) => {
       if (el.hasAttribute('hanja')) {
         el.removeAttribute('hanja');
         el.setAttribute('hangul', '');
