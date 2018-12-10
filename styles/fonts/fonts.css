@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+@font-face {
+  font-family: 'NanumSquare';
+  src: url(../fonts/NanumSquareR.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url(../fonts/NanumSquare/NanumSquareRoundR.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'NanumMyeongjo';
+  src: url(../fonts/NanumMyeongjo/NanumMyeongjo.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'NotoColorEmoji';
+  src: url(../fonts/NotoColorEmoji.ttf) format('truetype');
+}
+
+body {
+  font-family: Roboto;
+}
+
+.chinese {
+  font-family: 'UD Digi Kyokasho NK-R';
+  font-size: 1.4em;
+}
+
+.korean {
+  font-family: NanumSquare;
+  font-size: 1em;
+}
+
+.flag {
+  font-family: NotoColorEmoji;
+  font-size: 24px;
+}

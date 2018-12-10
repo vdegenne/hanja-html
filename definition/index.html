@@ -1,0 +1,21 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../styles/fonts/fonts.css">
+    <link rel="stylesheet" href="../styles/layout.css">
+  </head>
+  <body>
+    <div id="content"></div>
+
+    <p class="tags" style="width:500px;margin:0 auto;">#정의#맞팔#선팔#coréen#korean#언어#languages#langues#韩语#韩国语#한글#어학#한국어#디자인#공부스타#공부#공부스타그램</p>
+  </body>
+  <script type="module">
+    import {getWordTemplate} from './definitions.js';
+    import {render} from "../node_modules/lit-html/lit-html.js";
+
+    render(
+      getWordTemplate("definition3"),
+      document.getElementById('content')
+    );
+  </script>
+</html>

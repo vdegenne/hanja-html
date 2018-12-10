@@ -1,0 +1,24 @@
+<!doctype html>
+<html>
+  <head>
+    <link rel="stylesheet" href="../styles/layout.css">
+    <link rel="stylesheet" href="../fonts/fonts.css">
+  </head>
+  <body>
+
+    <div id="content"></div>
+
+    <p style="width: 400px;margin:0 auto;">#언어#languages#言语#langues#korean#coréen#한국어#韓國語#韓國#chinois#chinese#중국어#汉语#japonais#japanese#日本語#french#francais#프랑스어#불어#法语#맞팔#선팔#공부#공부스타#공부스타그램#영어#english#英語
+    </p>
+
+    <script type="module">
+      import { createTranslationCard } from './translations.js';
+      import { render } from '../node_modules/lit-html/lit-html.js';
+
+      render(
+        createTranslationCard("translation1"),
+        document.getElementById('content')
+      );
+    </script>
+  </body>
+</html>

@@ -1,6 +1,16 @@
 import { html, render } from "../node_modules/lit-html/lit-html.js";
+import { classMap } from '../node_modules/lit-html/directives/class-map.js';
 import { unsafeHTML } from "../node_modules/lit-html/directives/unsafe-html.js";
-import { decorateHTML } from '../util.js';
+import { decorateHTML, getIndex } from '../util.js';
+
+
+export const langs = {
+  'en': 'english',
+  'fr': 'français',
+  'kr': '한국어'
+};
+
+
 
 // 字 and 学
 export const confusion1 = {
@@ -32,143 +42,161 @@ export const confusion1 = {
     }
 }
 
+// 夂 and 攵
+export const confusion2 = {
+  langs: ['en', 'fr', 'en'],
+  char1: {
+    name: '夂',
+    meanings: {
+      'en': ['to go', 'to walk slowly'],
+      'fr': ['aller', 'marcher lentement'],
+      'kr': ['뒤져 오다', '천천히 걷는 모양']
+    },
+    details: {
+      'en': '夂 is a letter, a component used to form chinese characters.<br> It can\'t be used alone. Compared to 攵, this character has 3 strokes. The stroke #2 is similar to the strokes #2 and #3 in 攵.',
+      'fr': '夂 est une lettre utilisée dans la formation de caractères chinois.<br>Elle ne peut pas être utilisée seule.<br>Le trait #2 ressemble aux traits #2 et #3 dans 攵.',
+      'kr': '夂는 <span style="color:red">등글월문</span>이란 부수입니다. 한자를 지는 데 쓰는 성분입니다.<br>#2획은 攵에 #2획이랑 #3획과 똑같은 모양입니다.'
+    }
+  },
+  char2: {
+    name: '攵',
+    meanings: {
+      'en': ['to knock', 'to hit', 'to tap'],
+      'fr': ['donner un petit coup', 'une petite tape'],
+      'kr': ['치다', '때리다', '글월']
+    },
+    details: {
+      'en': '攵 is also a component used to form chinese characters.<br>It has 4 strokes.<br> The stroke #2 and #3 looks like the stroke #2 in 夂.',
+      'fr': '攵 est aussi une lettre.<br> Les traits #2 et #3 ressemblent au trait unique #2 dans 夂.',
+      'kr': '攵도 한자를 지은 데 쓰는 성분입니다.<br>#2획이랑 #3획은 夂에 #2획과 똑같한 모양입니다.'
+    }
+  }
+}
 
 
 export const createConfusionCard = (confusion, lang) => {
-  if (typeof confusion !== 'string') {
-    throw new Error('confusion needs to be of type string');
-  }
 
-  const index = parseInt(confusion.match(/[0-9]+/g)[0]);
+  const index = getIndex(confusion);
   confusion = eval(confusion);
-  
-  const langs = { 'fr': 'fr', 'eng': 'eng', 'kor': '한국어' };
-  
-  const content = html`
+
+  return html`
   <style>
-    .card {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      width: 640px;
-      height: 640px;
+    html {
+      --middle-width: 30px;
 
-      margin: 40px auto 0;
-      
-      border: 1px solid rgba(100, 100, 100, .2);
+      --side-padding: 30px; /* reference value */
+      --en-side-padding: 30px;
+      --kr-side-padding: 44px;
 
-      position: relative;
+      --sep-height: 400px; /* reference value */
+      --en-sep-height: var(--sep-height);
 
-      font-size: 1.3em;
+      --en-font-size: 23px;
+      --fr-font-size: 23px;
     }
 
-    .card[korean] {
-      font-family: NanumSquare;
-    }
-
-    header {
-      position: absolute;
-
+    .inner {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 36px;
-      padding: 0 20px 0 10px;
-      background: #565656;
-      color: #fff;
-      font-size: 1em;
-      /* font-style: italic; */
-    }
-
-    section {
-      display: flex;
-      justify-content: center;
+      justify-content: space-evenly;
       align-items: flex-start;
+
+      width: 100%;
     }
 
+    /* SIDE */
     .side {
-      display: flex;
-      flex-direction: column;
-      width: 240px;
+      width: 100%;
+      padding: 10px var(--side-padding);
+      /* background: grey; */
+    }
+    .inner.english .side {
+      padding: 10px var(--en-side-padding);
+    }
+    .inner.korean .side {
+      padding: 10px var(--kr-side-padding);
     }
 
-    .side > .title {
-      font-size: 3em;
-      /* margin-bottom: 40px; */
-      color: #2b2b2b;
-      /* text-align:center; */
+    .side h2 {
+      font-size: 120px;
+      margin: 0 0 14px;
+      color: #272727;
     }
 
-    .card:not([korean]) .meanings {
-      font-family: 'UD Digi Kyokasho NK-R';
+    .side .tags {
+      margin: 24px 0;
     }
+    .side .tags > .tag {
+      font-size: 20px;
 
-    .side .meanings {
-      font-size: 1.1em;
-      text-align: justify;
-      text-indent: 10px;
-      margin: 40px 0;
-    }
-
-    .meanings > span {
       display: inline-block;
-      background: #5c6bc0;
+      padding: 4px 8px;
+      margin: 0 4px 4px 0;
+      
+      background: #623ed2;
       color: #fff;
-      margin: 2px 2px;
-      padding: 4px 5px;
-      text-indent: initial;
-      border-radius: 3px;
+      border-radius: 2px;
+    }
+    .inner.korean .side .tags > .tag {
+      /* font-family: NanumSquareRound; */
     }
 
-    .side .add {
-      line-height: 45px;
-      font-size: 1.3em;
-      /* text-align: justify; */
-    }
+    /* DETAILS */
+    .side .details {
+      font-size: 24px;
 
-    .card[korean] .add {
+      line-height: 36px;
       text-align: justify;
+    }
+    .inner.english .side .details {
+      font-size: var(--en-font-size);
+    }
+    .inner.french .side .details {
+      font-size: var(--fr-font-size);
+    }
+    .inner.french .left-side .details {
+      margin-top: 60px;
+    }
+    .inner.korean .right-side .details {
+      margin-top: 60px;
     }
 
 
     .separator {
-      width: 2px;
-      background: #ececec;
-      margin: 0 39px;
+      height: var(--sep-height);
+      margin-top: 40px;
+
+      width: 8px;
       border-radius: 50%;
-      height: 340px;
+      background: #eaeaea;
+
+      /* margin: 0 40px; */
+    }
+    .inner.korean .separator {
+      height: var(--sep-height);
+    }
+    .inner.english .separator {
+      height: var(--en-sep-height);
     }
   </style>
-  <div class="card" ?korean="${lang === 'kor'}">
+  <div class="card border">
 
-    <header>
-      <span>${lang !== 'kor' ? 'confusion' : '혼동함'}#${index}</span>
-      <span>${langs[lang]}</span>
-    </header>
+    <header><span>confusion#${index}</span><span class="${classMap({korean: lang==='kr'})}">${langs[lang]}</span></header>
 
-    <section>
-      <div class="side">
-        <span class="title chinese">${confusion.char1.name}</span>
-        <div class="meanings">${confusion.char1.meanings[lang].split(',').map(m => html`<span>${m}</span>`)}</div>
-        ${confusion.char1.additional[lang] ? html`<div class="add">${confusion.char1.additional[lang]}</div>` : null}
+    <div class="inner ${classMap({korean: lang === 'kr', english: lang === 'en', french: lang === 'fr'})}">
+      <div class="side left-side">
+        <h2 class="chinese">${confusion.char1.name}</h2>
+        <div class="tags">${confusion.char1.meanings[lang].map(m => html`<div class="tag">${m}</div>`)}</div>
+        <div class="details">${unsafeHTML(decorateHTML(confusion.char1.details[lang]))}</div>
       </div>
+
       <div class="separator"></div>
-      <div class="side">
-      <span class="title chinese">${confusion.char2.name}</span>
-        <div class="meanings">${confusion.char2.meanings[lang].split(',').map(m => html`<span>${m}</span>`)}</div>
-        ${confusion.char2.additional[lang] ? html`<div class="add">${confusion.char2.additional[lang]}</div>` : null}
+
+      <div class="side right-side">
+        <h2 class="chinese">${confusion.char2.name}</h2>
+        <div class="tags">${confusion.char2.meanings[lang].map(m => html`<div class="tag">${m}</div>`)}</div>
+        <div class="details">${unsafeHTML(decorateHTML(confusion.char2.details[lang]))}</div>
       </div>
-    </section>
-
-    <div style="height:30px;"></div>
-  </div>`;
-
-
-  const fakeElement = document.createElement('div');
-  render(content, fakeElement);
-  return html`${unsafeHTML(decorateHTML(fakeElement.innerHTML.replace(/<!---->/g, ''), false, true, false))}`;
-};
+    </div>
+  </div>
+  `
+}

@@ -1,28 +1,25 @@
 <!doctype html>
 <html>
   <head>
+    <meta charset="utf-8">
     <link rel="stylesheet" href="../fonts/fonts.css">
+    <link rel="stylesheet" href="../styles/layout.css">
   </head>
   <body>
-    <style>
-      #tags {
-        width: 500px;
-        margin: 20px auto;
-      }
-    </style>
     <div id="content"></div>
-    <p id="tags">#중국어#한자어#한자#문자#학문#문법#언어#어학#유학#공부#공부스타#공부스타그램#파이팅#맞팔#소통#漢語#汉语#프랑스#프랑스어#coréen#corée#study#中國語#中国语#chinese#languages#studying</p>
+
+    <p id="tags" style="width: 500px;margin:20px auto;">#languages#언어#言语#langues#중국어#한자#chinois#chinese#汉语#francais#english#한국어#영어#korean#coréen#공부#공부스타#공부스타그램#法语#韩语#英语</p>
 
     <script type="module">
-      import {render, html} from "../node_modules/lit-html/lit-html.js";
-      import {createConfusionCard} from './confusions.js';
-      import {decorateContent} from '../util.js';
+      import { render } from "../node_modules/lit-html/lit-html.js";
+      import { createConfusionCard, langs as cardLangs } from './confusions.js';
+      /* import {decorateContent} from '../util.js'; */
 
-      const langs = ['fr', 'eng', 'kor'];
+      const langs = Object.keys(cardLangs);
       let langIndex = -1;
       const content = document.getElementById('content');
 
-      window.renderCard = (lang) => render(createConfusionCard("confusion1", lang), content);
+      window.renderCard = (lang) => render(createConfusionCard("confusion2", lang), content);
 
       content.addEventListener('click', () => {
         if (++langIndex >= langs.length) {
