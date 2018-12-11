@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../styles/fonts/fonts.css">
+  </head>
+  <body>
+    <style>
+      #content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+      }
+      .answer {
+        display: none;
+        font-size: 50px;
+      }
+      #content[answer] .answer {
+        display: inherit;
+      }
+      #content[answer] .meaning {
+        /* display: none; */
+      }
+    </style>
+    <div id="content" onclick="this.toggleAttribute('answer')"></div>
+
+    <script type="module">
+      import {getRandom} from './boards.js';
+      import {render, html} from '../node_modules/lit-html/lit-html.js';
+
+      const random = getRandom();
+      const content = document.getElementById('content');
+      
+      render(
+        html`
+        <div class="answer chinese">${random.hj}</div>
+        ${random.meanings.map(m => html`<div class=meaning>${m}</div>`)}
+        `,
+        content
+      )
+    </script>
+  </body>
+</html>

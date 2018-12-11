@@ -40,103 +40,615 @@ export const getStringBoardDetails = (string) => {
   return details;
 }
 
-//(async () => console.log(await createBoardArray('出v租vn車n打v電n話n蘋n果n都na')))();
+
+
+//(async () => console.log(await createBoardArray('能an香jn媽n狗n肉n常aj坐n起v床n')))();
 
 
 
 // 初步者漢語實際學習表記冬天愛感冒
-export const board1 = [
-  { hj: '初', hg: '초', type: 'an' }
-];
+// export const board1 = [
+//   { hj: '初', hg: '초', type: 'an' }
+// ];
 
-// 撤回政府抗議示威破損依毀雕刻像壁
+// 撤v回vn政n府n抗v議v示v威n破vnj損vj依va毀v雕vn刻van像van壁n
 export const board2 = [
-  { hj: '撤', hg: '철', type: 'v' },
-  { hj: '回', hg: '회', type: 'vn' },
-  { hj: '政', hg: '정', type: 'n' },
-  { hj: '府', hg: '부', type: 'n' },
-  { hj: '抗', hg: '항', type: 'v' },
-  { hj: '議', hg: '의', type: 'v' },
-  { hj: '示', hg: '시', type: 'v' },
-  { hj: '威', hg: '위', type: 'n' },
-  { hj: '破', hg: '파', type: 'vnj' },
-  { hj: '損', hg: '손', type: 'vj' },
-  { hj: '依', hg: '의', type: 'va' },
-  { hj: '毀', hg: '훼', type: 'v' },
-  { hj: '雕', hg: '조', type: 'vn' },
-  { hj: '刻', hg: '각', type: 'van' },
-  { hj: '像', hg: '상', type: 'van' },
-  { hj: '壁', hg: '벽', type: 'n' },
+  {
+    hj: "撤",
+    pinyins: ["chè"],
+    hg: ["철"],
+    type: "v",
+    meanings: ["to remove", "to take away", "to withdraw"]
+  },
+  {
+    hj: "回",
+    pinyins: ["huí"],
+    hg: ["회"],
+    type: "vn",
+    meanings: [
+      "to circle",
+      "to revolve",
+      "to go back",
+      "to turn around",
+      "to return",
+      "to answer"
+    ]
+  },
+  {
+    hj: "政",
+    pinyins: ["zhèng"],
+    hg: ["정"],
+    type: "n",
+    meanings: ["political", "politics", "government"]
+  },
+  {
+    hj: "府",
+    pinyins: ["fǔ"],
+    hg: ["부"],
+    type: "n",
+    meanings: [
+      "seat of government",
+      "official resident",
+      "mansion",
+      "presidential palace"
+    ]
+  },
+  {
+    hj: "抗",
+    pinyins: ["kàng"],
+    hg: ["강", "항"],
+    type: "v",
+    meanings: ["to resist", "to fight", "to defy", "anti-"]
+  },
+  {
+    hj: "議",
+    pinyins: ["yì"],
+    hg: ["의"],
+    type: "v",
+    meanings: ["to comment on", "to discuss", "to suggest"]
+  },
+  {
+    hj: "示",
+    pinyins: ["shì"],
+    hg: ["시", "기", "치"],
+    type: "v",
+    meanings: ["to show", "to reveal"]
+  },
+  {
+    hj: "威",
+    pinyins: ["wēi"],
+    hg: ["위"],
+    type: "n",
+    meanings: ["dignity", "prestige", "power", "might"]
+  },
+  {
+    hj: "破",
+    pinyins: ["pò"],
+    hg: ["파"],
+    type: "vnj",
+    meanings: [
+      "broken",
+      "damaged",
+      "worn out",
+      "to destroy",
+      "to break",
+      "to defeat"
+    ]
+  },
+  {
+    hj: "損",
+    pinyins: ["sǔn"],
+    hg: ["손"],
+    type: "vj",
+    meanings: ["to decrease", "to damage", "to harm"]
+  },
+  {
+    hj: "依",
+    pinyins: ["yī"],
+    hg: ["의"],
+    type: "va",
+    meanings: ["to depend on", "according to"]
+  },
+  {
+    hj: "毀",
+    pinyins: ["huǐ"],
+    hg: ["훼"],
+    type: "v",
+    meanings: ["to damage", "to ruin", "to destroy", "to defame"]
+  },
+  {
+    hj: "雕",
+    pinyins: ["diāo"],
+    hg: ["조"],
+    type: "vn",
+    meanings: ["to carve", "to engrave"]
+  },
+  {
+    hj: "刻",
+    pinyins: ["kè"],
+    hg: ["각"],
+    type: "van",
+    meanings: [
+      "to carve",
+      "to engrave",
+      "oppressive",
+      "severe",
+      "moment",
+      "classifier for short time intervals"
+    ]
+  },
+  {
+    hj: "像",
+    pinyins: ["xiàng"],
+    hg: ["상"],
+    type: "van",
+    meanings: [
+      "image",
+      "appearance",
+      "portrait",
+      "to ressemble",
+      "to look like"
+    ]
+  },
+  {
+    hj: "壁",
+    pinyins: ["bì"],
+    hg: ["벽"],
+    type: "n",
+    meanings: ["wall", "rampart", "barrier"]
+  }
 ];
 
-// 喜歡數字已經去世杯買覺得值圖書館
+// 喜vn歡j數an字n已a經vn去vj世n杯vnj買v覺v得v值nj圖nv書nv館n
 export const board3 = [
-  { hj: '喜', hg: '희', type: 'vn' },
-  { hj: '歡', hg: '환', type: 'j' },
-  { hj: '數', hg: '수', type: 'an' }, // 수숫삭촉
-  { hj: '字', hg: '자', type: 'n' },
-  { hj: '已', hg: '이', type: 'a' },
-  { hj: '經', hg: '경', type: 'vn' },
-  { hj: '去', hg: '거', type: 'vj' },
-  { hj: '世', hg: '세', type: 'n' },
-  { hj: '杯', hg: '배', type: 'vnj' },
-  { hj: '買', hg: '매', type: 'v' },
-  { hj: '覺', hg: '각', type: 'v' }, // 각교
-  { hj: '得', hg: '득', type: 'v' },
-  { hj: '值', hg: '치', type: 'nj' },
-  { hj: '圖', hg: '도', type: 'nv' },
-  { hj: '書', hg: '서', type: 'nv' },
-  { hj: '館', hg: '관', type: 'n' },
+  {
+    hj: "喜",
+    pinyins: ["xǐ"],
+    hg: ["희"],
+    type: "vn",
+    meanings: [
+      "to be fond of",
+      "to like",
+      "to enjoy",
+      "to be happy",
+      "happiness",
+      "delight",
+      "glad"
+    ]
+  },
+  {
+    hj: "歡",
+    pinyins: ["huān"],
+    hg: ["환"],
+    type: "j",
+    meanings: ["joyous", "happy", "pleased"]
+  },
+  {
+    hj: "數",
+    pinyins: ["shù"],
+    hg: ["촉", "삭", "수", "숫"],
+    type: "an",
+    meanings: ["number", "figure", "several"]
+  },
+  {
+    hj: "字",
+    pinyins: ["zì"],
+    hg: ["자"],
+    type: "n",
+    meanings: ["letter", "character", "symbol"]
+  },
+  {
+    hj: "已",
+    pinyins: ["yǐ"],
+    hg: ["이"],
+    type: "a",
+    meanings: ["already"]
+  },
+  {
+    hj: "經",
+    pinyins: ["jīng"],
+    hg: ["경"],
+    type: "vn",
+    meanings: [
+      "to endure",
+      "to pass through",
+      "to undergo",
+      "to bear",
+      "channel",
+      "nerve",
+      "abbr. for economics"
+    ]
+  },
+  {
+    hj: "去",
+    pinyins: ["qù"],
+    hg: ["거"],
+    type: "vj",
+    meanings: [
+      "to go",
+      "(of a time, event, etc) just passed or elapsed",
+      "to remove",
+      "to get rid of"
+    ]
+  },
+  {
+    hj: "世",
+    pinyins: ["shì"],
+    hg: ["세"],
+    type: "n",
+    meanings: [
+      "world",
+      "generation",
+      "descendant",
+      "era",
+      "epoch",
+      "life",
+      "lifetime"
+    ]
+  },
+  {
+    hj: "杯",
+    pinyins: ["bēi"],
+    hg: ["배"],
+    type: "vnj",
+    meanings: ["cup", "trophy cup"]
+  },
+  {
+    hj: "買",
+    pinyins: ["mǎi"],
+    hg: ["매"],
+    type: "v",
+    meanings: ["to buy", "to purchase"]
+  },
+  {
+    hj: "覺",
+    pinyins: ["jué"],
+    hg: ["교", "각"],
+    type: "v",
+    meanings: ["to be aware (of)", "to feel", "to find that"]
+  },
+  {
+    hj: "得",
+    pinyins: ["dé", "de"],
+    hg: ["득"],
+    type: "v",
+    meanings: ["to obtain", "to get", "to gain", "to catch", "to make clear"]
+  },
+  {
+    hj: "值",
+    pinyins: ["zhí"],
+    hg: ["치"],
+    type: "nj",
+    meanings: ["value", "(to be) worth"]
+  },
+  {
+    hj: "圖",
+    pinyins: ["tú"],
+    hg: ["도"],
+    type: "nv",
+    meanings: [
+      "diagram",
+      "picture",
+      "drawing",
+      "to plan",
+      "to scheme",
+      "to attempt"
+    ]
+  },
+  {
+    hj: "書",
+    pinyins: ["shū"],
+    hg: ["서"],
+    type: "nv",
+    meanings: ["book", "letter", "document", "to write"]
+  },
+  {
+    hj: "館",
+    pinyins: ["guǎn"],
+    hg: ["관"],
+    type: "n",
+    meanings: [
+      "building",
+      "term for certain service establishments",
+      "embassy or consulate"
+    ]
+  }
 ];
 
-// 市民暴力對事態集結續行進統制主要
+// 市n民n暴j力n對vaj事n態n集v結v續v行v進v統vn制v主n要nv
 export const board4 = [
-  { hj: '市', hg: '시', type: 'n' },
-  { hj: '民', hg: '민', type: 'n' },
-  { hj: '暴', hg: '폭포', type: 'j' },
-  { hj: '力', hg: '력', type: 'n' },
-  { hj: '對', hg: '대', type: 'vaj' },
-  { hj: '事', hg: '사', type: 'n' },
-  { hj: '態', hg: '태', type: 'n' },
-  { hj: '集', hg: '집', type: 'v' },
-  { hj: '結', hg: '결계', type: 'v' },
-  { hj: '續', hg: '속', type: 'v' },
-  { hj: '行', hg: '행항', type: 'v' },
-  { hj: '進', hg: '진신', type: 'v' },
-  { hj: '統', hg: '통', type: 'vn' },
-  { hj: '制', hg: '제', type: 'v' },
-  { hj: '主', hg: '주', type: 'n' },
-  { hj: '要', hg: '요', type: 'nv' },
+  {
+    hj: "市",
+    pinyins: ["shì"],
+    hg: ["시"],
+    type: "n",
+    meanings: ["city", "market"]
+  },
+  {
+    hj: "民",
+    pinyins: ["mín"],
+    hg: ["민"],
+    type: "n",
+    meanings: ["the people", "citizens"]
+  },
+  {
+    hj: "暴",
+    pinyins: ["bào"],
+    hg: ["포", "폭"],
+    type: "j",
+    meanings: ["violent", "cruel", "sudden"]
+  },
+  {
+    hj: "力",
+    pinyins: ["lì"],
+    hg: ["역", "력"],
+    type: "n",
+    meanings: ["power", "force", "strength", "ability"]
+  },
+  {
+    hj: "對",
+    pinyins: ["duì"],
+    hg: ["대"],
+    type: "vaj",
+    meanings: [
+      "to face",
+      "to confront",
+      "to match",
+      "towards",
+      "at",
+      "right",
+      "correct"
+    ]
+  },
+  {
+    hj: "事",
+    pinyins: ["shì"],
+    hg: ["사"],
+    type: "n",
+    meanings: ["work", "affair", "matter", "situation", "thing", "item"]
+  },
+  {
+    hj: "態",
+    pinyins: ["tài"],
+    hg: ["태"],
+    type: "n",
+    meanings: ["attitude", "state"]
+  },
+  {
+    hj: "集",
+    pinyins: ["jí"],
+    hg: ["집"],
+    type: "v",
+    meanings: ["to gather", "to collect", "to assemble together"]
+  },
+  {
+    hj: "結",
+    pinyins: ["jié", "jiē"],
+    hg: ["결", "계"],
+    type: "v",
+    meanings: ["to tie", "to bind", "firm", "solid"]
+  },
+  {
+    hj: "續",
+    pinyins: ["xù"],
+    hg: ["속"],
+    type: "v",
+    meanings: ["to join", "to continue", "to replenish"]
+  },
+  {
+    hj: "行",
+    pinyins: ["xíng", "háng", "xìng"],
+    hg: ["행", "항"],
+    type: "v",
+    meanings: [
+      "to go",
+      "to walk",
+      "to perform",
+      "to do",
+      "row",
+      "series",
+      "behavior",
+      "conduct"
+    ]
+  },
+  {
+    hj: "進",
+    pinyins: ["jìn"],
+    hg: ["신", "진"],
+    type: "v",
+    meanings: ["to advance", "to enter", "to come (or go) into"]
+  },
+  {
+    hj: "統",
+    pinyins: ["tǒng"],
+    hg: ["통"],
+    type: "vn",
+    meanings: ["to gather", "to unify", "to unite", "whole"]
+  },
+  {
+    hj: "制",
+    pinyins: ["zhì"],
+    hg: ["제"],
+    type: "v",
+    meanings: ["to control", "to regulate", "variant of 製"]
+  },
+  {
+    hj: "主",
+    pinyins: ["zhǔ"],
+    hg: ["주"],
+    type: "n",
+    meanings: ["main", "master"]
+  },
+  {
+    hj: "要",
+    pinyins: ["yào", "yāo"],
+    hg: ["요"],
+    type: "nv",
+    meanings: [
+      "important",
+      "vital",
+      "necessary",
+      "protecting",
+      "contour",
+      "may",
+      "will",
+      "going to",
+      "(used in comparison) must be",
+      "to want",
+      "to demand",
+      "to request"
+    ]
+  }
 ];
 
-// 小說昨天隨便妻子菜
+// 小ja說v昨n天n隨v便vaj妻n子n菜n
 export const board5 = [
-  { hj: '小', hg: '소', type: 'ja' },
-  { hj: '說', hg: '설세열탈', type: 'v' },
-  { hj: '昨', hg: '작', type: 'n' },
-  { hj: '天', hg: '천', type: 'n' },
-  { hj: '隨', hg: '수타', type: 'v' },
-  { hj: '便', hg: '편변', type: 'vaj' },
-  { hj: '妻', hg: '처', type: 'n' },
-  { hj: '子', hg: '자', type: 'n' },
-  { hj: '菜', hg: '채', type: 'n' }
-]
+  {
+    hj: "小",
+    pinyins: ["xiǎo"],
+    hg: ["소"],
+    type: "ja",
+    meanings: ["small", "tiny", "young"]
+  },
+  {
+    hj: "說",
+    pinyins: ["shuō", "shuì"],
+    hg: ["세", "설", "탈", "열"],
+    type: "v",
+    meanings: ["to speak", "to explain", "to say", "to persuade"]
+  },
+  {
+    hj: "昨",
+    pinyins: ["zuó"],
+    hg: ["작"],
+    type: "n",
+    meanings: ["yesterday"]
+  },
+  {
+    hj: "天",
+    pinyins: ["tiān"],
+    hg: ["천"],
+    type: "n",
+    meanings: ["day", "sky", "heaven"]
+  },
+  {
+    hj: "隨",
+    pinyins: ["suí"],
+    hg: ["수", "타"],
+    type: "v",
+    meanings: ["to follow", "to allow"]
+  },
+  {
+    hj: "便",
+    pinyins: ["biàn"],
+    hg: ["변", "편"],
+    type: "vaj",
+    meanings: ["to relieve oneself", "convenient", "easy", "simple"]
+  },
+  {
+    hj: "妻",
+    pinyins: ["qī"],
+    hg: ["처"],
+    type: "n",
+    meanings: ["wife"]
+  },
+  {
+    hj: "子",
+    pinyins: ["zǐ", "zi"],
+    hg: ["자"],
+    type: "n",
+    meanings: ["son", "child", "small thing", "noun suffix"]
+  },
+  {
+    hj: "菜",
+    pinyins: ["cài"],
+    hg: ["채"],
+    type: "n",
+    meanings: ["vegetable", "cuisine"]
+  }
+];
 
-// 能香媽狗肉常坐起床
+// 能an香jn媽n狗n肉n常aj坐n起v床n
 export const board6 = [
-  { hj: '能', hg: '능', type: 'an' },
-  { hj: '香', hg: '향', type: 'jn' },
-  { hj: '媽', hg: '마모', type: 'n' },
-  { hj: '狗', hg: '구', type: 'n' },
-  { hj: '肉', hg: '육유', type: 'n' },
-  { hj: '常', hg: '상', type: 'aj' },
-  { hj: '坐', hg: '좌', type: 'n' },
-  { hj: '起', hg: '기', type: 'v' },
-  { hj: '床', hg: '상', type: 'n' }
-]
+  {
+    hj: "能",
+    pinyins: ["néng"],
+    hg: ["내", "능"],
+    type: "an",
+    meanings: ["can", "to be able to", "ability", "(physics) energy"]
+  },
+  {
+    hj: "香",
+    pinyins: ["xiāng"],
+    hg: ["향"],
+    type: "jn",
+    meanings: [
+      "fragrance",
+      "scent",
+      "sweet smelling",
+      "aromatic",
+      "savory",
+      "appetizing"
+    ]
+  },
+  {
+    hj: "媽",
+    pinyins: ["mā"],
+    hg: ["마", "모"],
+    type: "n",
+    meanings: ["ma", "mom", "mother"]
+  },
+  {
+    hj: "狗",
+    pinyins: ["gǒu"],
+    hg: ["구"],
+    type: "n",
+    meanings: ["dog"]
+  },
+  {
+    hj: "肉",
+    pinyins: ["ròu"],
+    hg: ["유", "육"],
+    type: "n",
+    meanings: ["flesh", "meat", "pulp (of a fruit)"]
+  },
+  {
+    hj: "常",
+    pinyins: ["cháng"],
+    hg: ["상"],
+    type: "aj",
+    meanings: ["always", "ever", "often", "frequently", "common", "general"]
+  },
+  {
+    hj: "坐",
+    pinyins: ["zuò"],
+    hg: ["좌"],
+    type: "n",
+    meanings: ["seat"]
+  },
+  {
+    hj: "起",
+    pinyins: ["qǐ"],
+    hg: ["기"],
+    type: "v",
+    meanings: [
+      "to rise",
+      "to raise",
+      "to get up",
+      "classifier for groups (batch, group, etc...)"
+    ]
+  },
+  {
+    hj: "床",
+    pinyins: ["chuáng"],
+    hg: ["상"],
+    type: "n",
+    meanings: ["bed", "classifier for beds", "couch"]
+  }
+];
 
 // 出v租vn車n打v電n話n蘋n果n都na
-const board7 = [
+export const board7 = [
   {
     hj: "出",
     pinyins: ["chū"],
@@ -415,4 +927,13 @@ export const createBoard = (board) => {
     </div>`)}
   </div>
   `;
+}
+
+
+
+import * as _self from './boards.js';
+export const getRandom = () => {
+  const boards = Object.keys(_self).filter(p => p.match(/^board/));
+  const board = eval(boards[Math.floor(Math.random() * boards.length)]);
+  return board[Math.floor(Math.random() * board.length)];
 }
