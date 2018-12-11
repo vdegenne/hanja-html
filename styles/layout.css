@@ -24,12 +24,12 @@
   height: 30px;
   padding: 0 10px;
 
-  background: #eaeaea;
-  color: #808080;
+  background: #f3f3f3;
+  color: #a0a0a0;
 
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  box-shadow: 0 0px 7px -1px;
+  /* box-shadow: 0 0px 7px -1px; */
 }

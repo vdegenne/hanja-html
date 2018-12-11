@@ -11,6 +11,15 @@ export const translation1 = {
   'jp': 'よく [yoku / 요쿠]'
 }
 
+export const translation2 = {
+  'en': 'apple',
+  'fr': 'pomme [폼므]',
+  'kr': '사과 [sagwa]',
+  'cn': '蘋果/苹果 [píng guǒ]',
+  'jp': 'りんご/アップル [ringo / 링고]'
+}
+
+
 export const createTranslationCard = (translation) => {
 
   const index = getIndex(translation);
@@ -18,16 +27,20 @@ export const createTranslationCard = (translation) => {
 
   return html`
   <style>
-    .card { border-color: #d4d4d4; }
+    html {
+      --translation-font-size: 35px;
+      --translation-margin: 10px 0;
+    }
+    .card { border-color: #d4d4d4 }
 
     .translation {
       width: 530px;
-      font-size: 45px;
+      font-size: var(--translation-font-size);
 
       display: flex;
       align-items: center;
 
-      margin: 20px 0;
+      margin: var(--translation-margin);
 
       white-space: nowrap;
     }
@@ -37,6 +50,10 @@ export const createTranslationCard = (translation) => {
       margin: 0 20px 0;
     }
 
+    .translation:not(.korean):not(.chinese) .trans {
+      font-family: cursive;
+      height: 58px;
+    }
     .trans.korean {
       font-family: NanumSquareRound;
     }
@@ -45,17 +62,17 @@ export const createTranslationCard = (translation) => {
       font-size: 24px;
 
       font-family: Roboto;
-      color: #888888;
+      color: #ffca7c;
       
       margin-left: 18px;
     }
     .pronounciations:before {
       content: '[';
-      margin-right: 3px;
+      margin-right: 1px;
     }
     .pronounciations:after {
       content: ']';
-      margin-left: 3px;
+      margin-left: 1px;
     }
 
     .pronounciations > span:not(:first-of-type):before {
@@ -64,12 +81,12 @@ export const createTranslationCard = (translation) => {
     }
   </style>
   <div class="card border">
-    <header><span>translation#${index}</span></header>
+    <header><span>translations #${index}</span></header>
     
     ${Object.keys(translation).map(lang => html`
       <div class="translation ${classMap({ korean: lang === 'kr', chinese: lang === 'cn' || lang === 'jp' })}">
         <span class="flag">${flags[lang]}</span>
-        <span class="trans ${classMap({korean: lang==='kr'})}">${parts(translation[lang])['trans']}</span>
+        <span class="trans ${classMap({korean: lang==='kr'})}">${parts(translation[lang])['trans'].replace('/', ' ⸱ ')}</span>
         ${parts(translation[lang])['pronounc'] ? html`
           <div class="pronounciations">
           ${parts(translation[lang])['pronounc'].map(p => html`<span class="${classMap({korean: isKorean(p)})}">${p}</span>`)}
@@ -77,6 +94,16 @@ export const createTranslationCard = (translation) => {
         ` : null}
       </div>
     `)}
+
+    <style>
+      img {
+        position: absolute;
+        top: 90px;
+        right: 90px;
+        width: 120px;
+      }
+    </style>
+    <img src="http://www.clker.com/cliparts/8/b/4/8/1245695188697189992johnny_automatic_apple_1.svg.med.png">
   </div>`
 };
 
