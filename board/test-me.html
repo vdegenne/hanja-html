@@ -6,6 +6,10 @@
   </head>
   <body>
     <style>
+      body {
+        background: #000;
+      }
+
       #content {
         display: flex;
         flex-direction: column;
@@ -14,15 +18,19 @@
         position: absolute;
         top: 0;
         right: 0;
-        bottom: 0;
+        bottom: 0px;
         left: 0;
+        cursor: pointer;
+        user-select: none;
+        color: #fff;
       }
       .answer {
-        display: none;
-        font-size: 50px;
+        visibility: hidden;
+        font-size: 100px;
+        margin: 0 0 20px;
       }
       #content[answer] .answer {
-        display: inherit;
+        visibility: visible;
       }
       #content[answer] .meaning {
         /* display: none; */
