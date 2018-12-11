@@ -2,7 +2,8 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="../fonts/fonts.css">
+  <link rel="stylesheet" href="../styles/fonts/fonts.css">
+  <link rel="stylesheet" href="../styles/layout.css">
 </head>
 
 <body>
@@ -24,31 +25,18 @@
       margin: 0 auto;
     }
   </style>
-  <div id="content" hanja onclick="switchHanjaHangul(this)"></div>
+  <div id="content" onclick="switchHanjaHangul(this)"></div>
 
   <p id="tags">#한자#한자어#중국어#한글#coréen#어학#유학#언어#맞팔#선팔#공부스타#공부#공부스타그램#문자#漢語#汉语#中國語#中国语#chinese#languages#studying#chinois</p>
 
   <script type="module">
-    import { createBoard, board6 } from "./boards.js";
+    import { createBoard } from "./boards.js";
     import { render } from '../node_modules/lit-html/lit-html.js';
     
     render(
-      createBoard(board6),
+      createBoard("board7"),
       document.getElementById('content')
     );
-  </script>
-
-  <script>
-    const switchHanjaHangul = (el) => {
-      if (el.hasAttribute('hanja')) {
-        el.removeAttribute('hanja');
-        el.setAttribute('hangul', '');
-      }
-      else {
-        el.removeAttribute('hangul');
-        el.setAttribute('hanja', '');
-      }
-    }
   </script>
 </body>
 

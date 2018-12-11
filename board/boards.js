@@ -1,4 +1,48 @@
 import { html } from '../node_modules/lit-html/lit-html.js';
+import { getIndex } from '../util.js';
+
+
+
+export const getHanmun = async (character) => (await (await fetch(`http://www.hangulhanja.com/api/hanmuns/${character}?eager=hangeuls`)).json()).hanmun;
+export const createBoardArray = async (stringboard) => {
+  const board = [];
+
+  const details = getStringBoardDetails(stringboard);
+
+  for (const d of details) {
+    const hanmun = await getHanmun(d.character);
+    board.push({
+      hj: hanmun.symbol,
+      pinyins: hanmun.pinyin.split('|'),
+      hg: [...new Set(hanmun.hangeuls.map(h => h.symbol))],
+      type: d.type,
+      meanings: hanmun.meanings.replace(/\||\/\//g, '/').split('/').map(m => m.trim())
+    })
+  }
+  
+  return JSON.stringify(board, null, '');
+}
+export const getStringBoardDetails = (string) => {
+  const details = [];
+  let e, type;
+  for (let i = 0; i < string.length; ++i) {
+    details.push(e = { character: string[i] });
+    /* types */
+    type = /^[ajvn]+/.exec(string.slice(i + 1));
+    if (!type) {
+      console.warn(`${e.character} has no type defined`);
+    }
+    type = type ? type[0] : '';
+    
+    e.type = type;
+    i += type.length;
+  }
+  return details;
+}
+
+//(async () => console.log(await createBoardArray('出v租vn車n打v電n話n蘋n果n都na')))();
+
+
 
 // 初步者漢語實際學習表記冬天愛感冒
 export const board1 = [
@@ -91,33 +135,112 @@ export const board6 = [
   { hj: '床', hg: '상', type: 'n' }
 ]
 
+// 出v租vn車n打v電n話n蘋n果n都na
+const board7 = [
+  {
+    hj: "出",
+    pinyins: ["chū"],
+    hg: ["출", "척"],
+    type: "v",
+    meanings: ["to come out", "to go out", "to rise", "to go beyond"]
+  },
+  {
+    hj: "租",
+    pinyins: ["zū"],
+    hg: ["조", "저"],
+    type: "vn",
+    meanings: ["to hire", "to rent (out)", "to lease (out)", "rent"]
+  },
+  {
+    hj: "車",
+    pinyins: ["chē"],
+    hg: ["거", "차"],
+    type: "n",
+    meanings: ["machine", "vehicle", "car"]
+  },
+  {
+    hj: "打",
+    pinyins: ["dǎ"],
+    hg: ["타"],
+    type: "v",
+    meanings: ["to beat", "to hit", "to strike", "to break", "to fetch"]
+  },
+  {
+    hj: "電",
+    pinyins: ["diàn"],
+    hg: ["전"],
+    type: "n",
+    meanings: ["electric", "electricity", "electrical"]
+  },
+  {
+    hj: "話",
+    pinyins: ["huà"],
+    hg: ["화"],
+    type: "n",
+    meanings: ["spoken words", "speech", "talk", "words"]
+  },
+  {
+    hj: "蘋",
+    pinyins: ["píng"],
+    hg: ["평", "빈"],
+    type: "n",
+    meanings: ["apple"]
+  },
+  {
+    hj: "果",
+    pinyins: ["guǒ"],
+    hg: ["관", "과"],
+    type: "n",
+    meanings: ["fruit", "result", "indeed"]
+  },
+  {
+    hj: "都",
+    pinyins: ["dū", "dōu"],
+    hg: ["지", "도"],
+    type: "na",
+    meanings: ["capital city", "metropolis", "all", "entirely"]
+  }
+];
+
+
+
 
 
 export const createBoard = (board) => {
 
+  const index = getIndex(board);
+  board = eval(board);
+
+  const content = ['hanjas', 'meanings', 'hanguls'];
+  let contentIndex = 0;
+  const switchContent = (el) => {
+    contentIndex = ++contentIndex === content.length ? 0 : contentIndex;
+    content.forEach(c => el.removeAttribute(c));
+    el.setAttribute(content[contentIndex], '');
+  }
+
   return html`
   <style>
-    .card {
-      display: flex;
-      flex-wrap: wrap;
-      /* background: grey; */
-      width: 640px;
-      height: 640px;
+    html {
+      --hanja-size: 110px;
+      --dot-size: 19px;
+      --case-top-offset: 6px;
+    }
 
-      margin: 20px auto;
+    .card {
+      flex-wrap: wrap;
+      flex-direction: row;
       
       padding: 25px;
       box-sizing: border-box;
-
-      border: 1px solid #f1f1f1;
-      border: 1px solid black;
-
-      position: relative;
+    }
+    .card > header {
+      background: #f5f5f5;
+      box-shadow: none;
+      padding-right: 4px;
     }
 
     .case {
-      --case-top-offset: 0px;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -135,9 +258,26 @@ export const createBoard = (board) => {
 
       color: black;
     }
-    .hanja {
-      --hanja-size: 110px;
 
+    .legend {
+      opacity: .8;
+
+      display: flex;
+      align-items: center;
+
+      /* color: #565656; */
+      margin-top: 1px;
+    }
+    .legend > span:nth-child(2n) {
+      font-family: NanumSquare;
+      font-weight: bold;
+      margin: 0 6px 0 0px;
+    }
+    .legend .dot {
+      font-size: 43px;
+    }
+
+    .hanja {
       font-family: 'UD Digi Kyokasho NK-R';
 
       /* margin: 0 0 10px 0; */
@@ -146,6 +286,49 @@ export const createBoard = (board) => {
       height: var(--hanja-size);
       line-height: var(--hanja-size);
     }
+    .hanja-info {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: var(--hanja-size);
+      /* margin-top: 10px; */
+      position: relative;
+      top: 10px;
+    }
+    .colors {
+      display: flex;
+    }
+    .pinyins {
+      color: #afafaf;
+    }
+
+    .sep-dot {
+      content: '•';
+      font-family: Arial;
+      font-weight: 100;
+      font-size: .6em;
+      margin: 0 0px !important;
+    }
+    .sep-dot:first-of-type {
+      display: none;
+    }
+
+    /* DOTS */
+    .dot {
+      display: block;
+      font-family: "Roboto";
+      width: var(--dot-size);
+      height: var(--dot-size);
+      font-size: 58px;
+      line-height: 21px;
+    }
+    .a { color: orange }
+    .v { color: #f7dd00 }
+    .j { color: green }
+    .n { color: black }
+
+
+    /* HANGULS */
     .hangul {
       display: flex;
       flex-wrap: wrap;
@@ -174,91 +357,60 @@ export const createBoard = (board) => {
       display: none;
     }
 
-    .sep-dot {
-      content: '•';
-      font-family: Arial;
-      font-weight: 100;
-      font-size: .6em;
-      margin: 0 0px !important;
+    .meanings {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-size: 23px;
     }
-    .sep-dot:first-of-type {
+
+
+
+    .hanja, .hanja-info, .legend, .hangul, .meanings {
       display: none;
     }
-
-    .colors {
-      display: flex;
-      justify-content: flex-start;
-      width:70%;
-      /* margin: 5px 0 0; */
-      font-size: 3em;
-
-      position: relative;
-      top: 10px;
-    }
-    .colors > span {
-      /* height: 0px; */
-      position: relative;
-      /* top: -6px; */
+    .card[hanjas] .hanja,
+    .card[hanjas] .legend,
+    .card[hanjas] .hanja-info {
+      display: inherit;
     }
 
-    .a, .v, .j, .n {
-      font-family: "Roboto";
-      font-size: 50px;
-      height: 16px;
-      line-height: 20px;
-    }
-    .a {
-      color: orange;
-    }
-    .v {
-      color: #f7dd00;
-    }
-    .j {
-      color: green;
-    }
-    .n {
-      color: black;
+    .card[meanings] .meanings {
+      display: inherit;
     }
 
-    .legend {
-      opacity: .4;
-
-      position: absolute;
-      top: 0;
-      right: 0;
-
-      display: flex;
-      align-items: center;
-
-      /* font-weight: bold; */
-      color: #565656;
-
-      padding: 12px 4px 0 0;
-    }
-    .legend > span:nth-child(2n) {
-      font-family: NanumSquare;
-      font-weight: bold;
-      margin: 0 10px 0 3px;
+    .card[hanguls] .hangul {
+      display: inherit;
     }
   </style>
   
-  <div class="card">
-    <div class="legend">
-      <span class="v">•</span><span>동</span>
-      <span class="a">•</span><span>부</span>
-      <span class="j">•</span><span>형용</span>
-      <span class="n">•</span><span>명</span>
-    </div>
+  <div class="card border" @click="${function (e) { switchContent(this) }}" hanjas>
+    <header>
+      <span>board #${index}</span>
+      <div class="legend">
+        <span class="dot v">•</span><span>동</span>
+        <span class="dot a">•</span><span>부</span>
+        <span class="dot j">•</span><span>형용</span>
+        <span class="dot n">•</span><span>명</span>
+      </div>
+    </header>
 
     ${board.map(b => html`
     <div class="case">
       <div class="hangul hangul${b.hg.length}">
-        ${b.hg.split('').map(hg => html`<span class="sep-dot">•</span><span>${hg}</span>`)}
+        ${b.hg.map(hg => html`<span class="sep-dot">•</span><span>${hg}</span>`)}
+      </div>
+
+      <div class="meanings">
+        ${b.meanings.map(m => html`<span>${m}</span>`)}
       </div>
 
       <span class="hanja">${b.hj}</span>
-      <div class="colors">
-        ${b.type.split('').map(t => html`<span class="${t}">•</span>`)}
+      <div class="hanja-info">
+        <div class="colors">
+          ${b.type.split('').map(t => html`<span class="dot ${t}">•</span>`)}
+        </div>
+        <span class="pinyins">${b.pinyins.join('/')}</span>
       </div>
     </div>`)}
   </div>
