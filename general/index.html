@@ -1,0 +1,22 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../styles/fonts/fonts.css">
+    <link rel="stylesheet" href="../styles/layout.css">
+  </head>
+  <body>
+    <div id="content"></div>
+
+    <script type="module">
+      import { render } from '../node_modules/lit-html/lit-html.js';
+      import { createCard } from './generals.js';
+      import { decorateContent } from '../util.js';
+
+      const content = document.getElementById('content');
+
+      render(createCard('ambiguous1'), content);
+      content.querySelectorAll('.inner').forEach(c => decorateContent(c));
+    </script>
+  </body>
+</html>

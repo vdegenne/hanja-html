@@ -46,4 +46,5 @@ export const decorateHTML = (html, korean = true, chinese = true, definitions = 
 }
 
 
+export const getCardName = (name) => name.replace(/[0-9]+$/, '');
 export const getIndex = (name) => parseInt(name.match(/[0-9]+/g));
