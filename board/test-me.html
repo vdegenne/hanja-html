@@ -6,28 +6,47 @@
   </head>
   <body>
     <style>
+      html {
+        --bottom-height: 60px;
+      }
+
       body {
         background: #000;
+        color: #fff;
+
+        display: flex;
+        flex-direction: column;
+
+        margin: 0;
+
+        height: 100vh;
+        display: flex;
       }
 
       #content {
         display: flex;
+        flex: 1;
         flex-direction: column;
         justify-content: center;
         align-items: center;
-        position: absolute;
-        top: 0;
-        right: 0;
-        bottom: 0px;
-        left: 0;
         cursor: pointer;
-        user-select: none;
-        color: #fff;
+
+        background :#292929;
       }
+
+      #content[answer] { background: black; }
+
       .answer {
         visibility: hidden;
-        font-size: 100px;
         margin: 0 0 20px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+      }
+      .answer .chinese {
+        font-size: 100px;
+        /* cursor: text; */
       }
       #content[answer] .answer {
         visibility: visible;
@@ -35,23 +54,172 @@
       #content[answer] .meaning {
         /* display: none; */
       }
+
+      .buttons {
+        background: green;
+        height: var(--bottom-height);
+        display: flex;
+      }
+      #yes, #no {
+        display: flex;
+        flex: 1;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        user-select: none;
+        letter-spacing: 1px;
+      }
+      .button:hover {
+        opacity: .8;
+      }
+      #yes {
+        background: #34ef34;
+      }
+      #no {
+        background: #ff1818;
+      }
+
+      #stats {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        font-size: 10px;
+      }
     </style>
-    <div id="content" onclick="this.toggleAttribute('answer')"></div>
+    <div id="content"></div>
+    <div class="buttons">
+        <div id="yes" onclick="yes()">yes</div>
+        <div id="no" onclick="no()">no</div>
+    </div>
 
     <script type="module">
-      import {getRandom} from './boards.js';
-      import {render, html} from '../node_modules/lit-html/lit-html.js';
+      import { getRandom, getHanjasCount, getHanjas } from './boards.js';
+      import { render, html } from '../node_modules/lit-html/lit-html.js';
+      import { randomRange, playPinyin } from '../util.js';
 
-      const random = getRandom();
       const content = document.getElementById('content');
-      
-      render(
-        html`
-        <div class="answer chinese">${random.hj}</div>
-        ${random.meanings.map(m => html`<div class=meaning>${m}</div>`)}
+      let hanja;
+      let knownHanjas  = new Set;
+      let failed = new Set;
+      let hanjasCount = getHanjasCount();
+      let hanjas = getHanjas();
+
+      content.addEventListener('click', () => {
+        if (!content.hasAttribute('answer')) {
+          content.toggleAttribute('answer');
+          _playPinyin();
+        }
+      });
+
+      const _playPinyin = () => playPinyin(hanja.pinyins[0]);
+      const navigateToHanja = () => window.open(`http://www.hangulhanja.com/hanja/${hanja.hj}`, '_blank');
+
+      const pickRandom = () => {
+        if (knownHanjas.size + failed.size < hanjasCount) {
+          do {
+            hanja = getRandom();
+          } while (knownHanjas.has(hanja) || failed.has(hanja));
+        } else {
+          if (failed.size < 1) {
+            console.warn('end');
+            hanja = null;
+          } else {
+            // we should make a intermediary array here to not pick randomly multiple
+            // times.
+            hanja = [...failed].cloneSlice([...failed].indexOf(hanja), 1)[randomRange(failed.size - 2)] || [...failed][0];
+          }
+        }
+      };
+
+      const renderView = () => render(html`
+        ${hanja ? html`
+          <div class="answer">
+            <span class="chinese" @click="${navigateToHanja}">${hanja.hj}</span>
+            <span style="margin:6px 0 0;" @click="${_playPinyin}">(${hanja.pinyins.join(' / ')})</span>
+            <span>${hanja.hg.join(' / ')}</span>
+          </div>
+          ${hanja.meanings.map(m => html`<div class=meaning>${m}</div>`)}
+        ` : 'finished'}
+
+        <div id="stats">
+          <span>total : ${knownHanjas.size + failed.size}/${hanjasCount}</span>
+          <span style="color:#37cd37">known : ${knownHanjas.size}</span>
+          <span style="color:red">failed : ${failed.size}</span>
+        </div>
         `,
         content
-      )
+      );
+
+      const updateViewWithRandom = () => {
+        pickRandom();
+        renderView();
+        _playPinyin();
+        content.removeAttribute('answer');
+      }
+
+
+      /**
+       * window variables
+       **/
+      window.no = () => {
+        if (!hanja) { return }
+
+        failed.add(hanja);
+        saveData();
+        updateViewWithRandom();
+      }
+      window.yes = ()  => {
+        if (!hanja) { return }
+
+        knownHanjas.add(hanja);
+        failed.delete(hanja);
+        saveData();
+        updateViewWithRandom();
+      }
+      window.getKnowns = () => [...knownHanjas].map(h => h.hj);
+      window.getFailed = () => [...failed].map(h => h.hj);
+      window.releaseOldKnows = (padding) => {
+        if (!padding) {
+          padding = knownHanjas.size;
+        }
+        knownHanjas = new Set([...knownHanjas].cloneSlice(0, padding));
+        saveData();
+
+        if (hanja === null) {
+          updateViewWithRandom();
+        }
+        else {
+          renderView();
+        }
+      }
+
+      const saveData = () => {
+        // acknowledged
+        let arr = [...knownHanjas];
+        localStorage.setItem('acknowledged', JSON.stringify(arr.length ? arr.map(h => h.hj) : []));
+        // failed
+        arr = [...failed];
+        localStorage.setItem('failed', JSON.stringify(arr.length ? arr.map(h => h.hj) : []));
+      }
+      const loadData = () => {
+        // acknowledged
+        let characters = JSON.parse(localStorage.getItem('acknowledged') || '[]');
+        knownHanjas = new Set;
+        characters.forEach(c => knownHanjas.add(hanjas.filter(h => c === h.hj)[0]));
+        // failed
+        characters = JSON.parse(localStorage.getItem('failed') || '[]');
+        failed = new Set;
+        characters.forEach(c => failed.add(hanjas.filter(h => c === h.hj)[0]));
+      }
+
+      // when the page starts
+      (() => {
+        loadData();
+        updateViewWithRandom();
+      })();
     </script>
   </body>
 </html>

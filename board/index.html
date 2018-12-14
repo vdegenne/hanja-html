@@ -8,24 +8,12 @@
 
 <body>
   <style>
-    #content[hanja] .case .hangul {
-      display: none;
-    }
-    #content[hangul] .case .hanja,
-    #content[hangul] .case .colors {
-      display: none;
-    }
-
-    #content[hangul] .legend {
-      display: none;
-    }
-
     #tags {
-      width: 500px;
-      margin: 0 auto;
+      width: 600px;
+      margin: 20px auto 0 auto;
     }
   </style>
-  <div id="content" onclick="switchHanjaHangul(this)"></div>
+  <div id="content"></div>
 
   <p id="tags">#한자#한자어#중국어#한글#coréen#어학#유학#언어#맞팔#선팔#공부스타#공부#공부스타그램#문자#漢語#汉语#中國語#中国语#chinese#languages#studying#chinois</p>
 
@@ -34,7 +22,7 @@
     import { render } from '../node_modules/lit-html/lit-html.js';
     
     render(
-      createBoard("board7"),
+      createBoard("board10"),
       document.getElementById('content')
     );
   </script>

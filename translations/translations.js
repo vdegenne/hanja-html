@@ -19,6 +19,24 @@ export const translation2 = {
   'jp': 'りんご/アップル [ringo / 링고]'
 }
 
+// to eat
+export const translation3 = {
+  'en': 'to eat',
+  'fr': 'manger [망제]',
+  'kr': '먹다 [meokda]',
+  'cn': '吃 [chī]',
+  'jp': '食べる/たべる [taberu / 타베루]'
+}
+
+// computer
+export const translation4 = {
+  'en': 'computer',
+  'fr': 'ordinateur [얼르디나터르]',
+  'kr': '컴퓨터 [Keompyuteo]',
+  'cn': '電腦/电脑 [diàn nǎo]',
+  'jp': 'コンピュータ [konpyuuta]'
+}
+
 
 export const createTranslationCard = (translation) => {
 
@@ -51,11 +69,12 @@ export const createTranslationCard = (translation) => {
     }
 
     .translation:not(.korean):not(.chinese) .trans {
-      font-family: cursive;
-      height: 58px;
+      /* font-family: cursive; */
+      height: 46px;
     }
     .trans.korean {
-      font-family: NanumSquareRound;
+      font-family: UhBeeRice;
+      font-size: 30px;
     }
     
     .pronounciations {
@@ -83,6 +102,9 @@ export const createTranslationCard = (translation) => {
   <div class="card border">
     <header><span>translations #${index}</span></header>
     
+
+    <div style="height:70px"></div>
+
     ${Object.keys(translation).map(lang => html`
       <div class="translation ${classMap({ korean: lang === 'kr', chinese: lang === 'cn' || lang === 'jp' })}">
         <span class="flag">${flags[lang]}</span>
@@ -95,15 +117,17 @@ export const createTranslationCard = (translation) => {
       </div>
     `)}
 
+
     <style>
       img {
         position: absolute;
-        top: 90px;
-        right: 90px;
-        width: 120px;
+        top: 50px;
+        /* bottom: 0; */
+        right: 110px;
+        width: 190px;
       }
     </style>
-    <img src="http://www.clker.com/cliparts/8/b/4/8/1245695188697189992johnny_automatic_apple_1.svg.med.png">
+    <img src="http://pic.90sjimg.com/design/01/42/67/84/58f02c6788e01.png">
   </div>`
 };
 
@@ -118,7 +142,7 @@ const flags = {
 
 const parts = (raw) => {
   const parts = {
-    trans: raw.match(/^([^\s\[]+)/)[1].trim()
+    trans: raw.match(/^([^\[]+)/)[1].trim()
   }
 
   if (raw.match(/\[([^\]]+)/)) {

@@ -6,10 +6,12 @@ export const isRoman = (input) => input && ((input[0] >= 'a' && input[0] <= 'z')
 export const isKoreanWord = (input) => input.match(koreanRegExp) ? true : false;
 export const isKorean = isKoreanWord; // alias
 export const isChinese = (input) => input.match(chineseRegExp);
-
+export const isJapanese = (input) => input.match(japaneseRegExp);
 export const chineseRegExp = /([\u4E00-\u9FCC\u3400-\u4DB5\uFA0E\uFA0F\uFA11\uFA13\uFA14\uFA1F\uFA21\uFA23\uFA24\uFA27-\uFA29]|[\ud840-\ud868][\udc00-\udfff]|\ud869[\udc00-\uded6\udf00-\udfff]|[\ud86a-\ud86c][\udc00-\udfff]|\ud86d[\udc00-\udf34\udf40-\udfff]|\ud86e[\udc00-\udc1d])+/;
 
 export const koreanRegExp = /([\uac00-\ud7af]|[\u1100-\u11ff]|[\u3130-\u318f]|[\ua960-\ua97f]|[\ud7b0-\ud7ff])+/;
+
+export const japaneseRegExp = /[\u3000-\u303f\u3040-\u309f\u30a0-\u30ff\uff00-\uff9f\u4e00-\u9faf\u3400-\u4dbf]/;
 
 export const decorateContent = (content) => content.innerHTML = decorateHTML(content.innerHTML);
 
@@ -48,3 +50,69 @@ export const decorateHTML = (html, korean = true, chinese = true, definitions = 
 
 export const getCardName = (name) => name.replace(/[0-9]+$/, '');
 export const getIndex = (name) => parseInt(name.match(/[0-9]+/g));
+
+export const cloneSlice = (arr, start, end) => {
+  const _arr = arr.slice();
+  _arr.splice(start, end);
+  return _arr;
+};
+Array.prototype.cloneSlice = function (start, end) { return cloneSlice(this, start, end); }
+
+export const randomRange = (...args) => {
+  let min, max;
+  if (args.length === 1) {
+    min = 0;
+    max = args[0];
+  }
+  else {
+    min = args[0];
+    max = args[1];
+  }
+
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
+export const getPinyinNumericSyntax = (pinyin) => {
+  const numerics = [
+    { value: 1, candidates: 'āēīōū' },
+    { value: 2, candidates: 'áéíóú' },
+    { value: 3, candidates: 'ǎěǐǒǔǚ' },
+    { value: 4, candidates: 'àèìòùǜ' },
+    { value: 5, candidates: 'aeiou' }
+  ];
+  const letters = [
+    { value: 'a', accents: 'āǎáà' },
+    { value: 'e', accents: 'ēéěè' },
+    { value: 'i', accents: 'īíǐì' },
+    { value: 'o', accents: 'ōóǒò' },
+    { value: 'u', accents: 'ūúǔù' },
+    { value: 'v', accents: 'ǜǚ' }
+  ];
+
+  let n;
+  for (n of numerics) {
+    if (pinyin.match(new RegExp(`[${n.candidates}]`))) {
+      pinyin += n.value;
+      break;
+    }
+  }
+
+  if (n.value !== 5) {
+    let unaccentPinyin;
+    for (const l of letters) {
+      if ((unaccentPinyin = pinyin.replace(new RegExp(`[${l.accents}]`), l.value)) !== pinyin) {
+        pinyin = unaccentPinyin;
+        break;
+      }
+    }
+  }
+
+  return pinyin;
+}
+
+
+export const playPinyin = (pinyin) => {
+  const audio = new Audio(`https://dictionary.writtenchinese.com/sounds/${getPinyinNumericSyntax(pinyin)}.mp3`);
+  setTimeout(() => audio.play(), 1000);
+}

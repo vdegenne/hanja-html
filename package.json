@@ -3,5 +3,8 @@
   "dependencies": {
     "@polymer/lit-element": "^0.6.4",
     "lit-html": "^0.14.0"
+  },
+  "devDependencies": {
+    "clang-format": "^1.2.4"
   }
 }

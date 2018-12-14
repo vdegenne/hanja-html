@@ -42,10 +42,6 @@ export const getStringBoardDetails = (string) => {
 
 
 
-//(async () => console.log(await createBoardArray('能an香jn媽n狗n肉n常aj坐n起v床n')))();
-
-
-
 // 初步者漢語實際學習表記冬天愛感冒
 // export const board1 = [
 //   { hj: '初', hg: '초', type: 'an' }
@@ -714,8 +710,149 @@ export const board7 = [
   }
 ];
 
+// 借v謝v拿v手n茶n吃v更va歲n點n
+export const board8 = [
+  {
+    hj: "借",
+    pinyins: ["jiè"],
+    hg: ["차"],
+    type: "v",
+    meanings: ["to lend", "to borrow"]
+  },
+  {
+    hj: "謝",
+    pinyins: ["xiè"],
+    hg: ["사"],
+    type: "v",
+    meanings: [
+      "to thank",
+      "to apologize",
+      "to wither (of flowers, leaves, etc...)",
+      "to decline"
+    ]
+  },
+  {
+    hj: "拿",
+    pinyins: ["ná"],
+    hg: ["나"],
+    type: "v",
+    meanings: ["to hold", "to seize", "to catch"]
+  },
+  {
+    hj: "手",
+    pinyins: ["shǒu"],
+    hg: ["수"],
+    type: "n",
+    meanings: [
+      "hand",
+      "person engaged in certain types of work",
+      "person skilled in certain types of work",
+      "classifier for skill"
+    ]
+  },
+  {
+    hj: "茶",
+    pinyins: ["chá"],
+    hg: ["차", "다"],
+    type: "n",
+    meanings: ["tea", "tea plant"]
+  },
+  {
+    hj: "吃",
+    pinyins: ["chī"],
+    hg: ["흘"],
+    type: "v",
+    meanings: ["to eat", "to consume"]
+  },
+  {
+    hj: "更",
+    pinyins: ["gēng", "gèng"],
+    hg: ["갱", "경"],
+    type: "va",
+    meanings: ["to change", "to replace", "more", "even more", "further"]
+  },
+  {
+    hj: "歲",
+    pinyins: ["suì"],
+    hg: ["세"],
+    type: "n",
+    meanings: ["year", "classifier for years (of age)"]
+  },
+  {
+    hj: "點",
+    pinyins: ["diǎn"],
+    hg: ["점", "다"],
+    type: "n",
+    meanings: ["point", "dot", "drop", "cure"]
+  }
+];
 
+// 比van長vjn城n玩vn
+export const board9 = [
+  {
+    hj: "比",
+    pinyins: [ "bǐ" ],
+    hg: [ "비" ],
+    type: "van",
+    meanings: [
+      "to compare",
+      "to contrast",
+      "particle used for comparison and \"-er than\"",
+      "ratio"
+    ]
+  },
+  {
+    hj: "長",
+    pinyins: [ "zhǎng", "cháng" ],
+    hg: [ "장" ],
+    type: "vjn",
+    meanings: [
+      "chief",
+      "head",
+      "to grow",
+      "to develop",
+      "to increase",
+      "to enhance",
+      "length",
+      "long"
+    ]
+  },
+  {
+    hj: "城",
+    pinyins: [ "chéng" ],
+    hg: [ "성" ],
+    type: "n",
+    meanings: [ "city walls", "ramparts", "city", "town" ]
+  },
+  {
+    hj: "玩",
+    pinyins: [ "wán" ],
+    hg: [ "완" ],
+    type: "vn",
+    meanings: [
+      "to keep sth for entertainment",
+      "sth used for amusement",
+      "to play",
+      "to have fun"
+    ]
+  }
+];
 
+// 腦n
+export const board10 = [
+  {
+    hj: "腦",
+    pinyins: [ "nǎo" ],
+    hg: [ "뇌" ],
+    type: "n",
+    meanings: [ "brain", "mind", "head", "essence" ]
+  }
+];
+
+// 趣vj味n愛vn
+// export const board11 = 0;
+
+// (async () => console.log(await createBoardArray('腦n')))();
 
 
 export const createBoard = (board) => {
@@ -734,9 +871,15 @@ export const createBoard = (board) => {
   return html`
   <style>
     html {
-      --hanja-size: 110px;
-      --dot-size: 19px;
-      --case-top-offset: 6px;
+      --hanja-size: 300px;
+      --hangul-size: 200px;
+      --pinyin-size: 28px;
+      --meaning-size: 40px;
+
+      --dot-size: 18px;
+
+      --case-top-offset: 0px;
+      --case-left-offset: 0;
     }
 
     .card {
@@ -766,9 +909,9 @@ export const createBoard = (board) => {
 
       position: relative;
       top: var(--case-top-offset);
-      left: -5px;
+      left: var(--case-left-offset);
 
-      color: black;
+      color: #444444;
     }
 
     .legend {
@@ -786,7 +929,8 @@ export const createBoard = (board) => {
       margin: 0 6px 0 0px;
     }
     .legend .dot {
-      font-size: 43px;
+      width: 12px;
+      height: 12px;
     }
 
     .hanja {
@@ -805,13 +949,14 @@ export const createBoard = (board) => {
       width: var(--hanja-size);
       /* margin-top: 10px; */
       position: relative;
-      top: 10px;
+      top: 15px;
     }
     .colors {
       display: flex;
     }
     .pinyins {
-      color: #afafaf;
+      font-size: var(--pinyin-size);
+      color: #8e8e8e;
     }
 
     .sep-dot {
@@ -831,13 +976,13 @@ export const createBoard = (board) => {
       font-family: "Roboto";
       width: var(--dot-size);
       height: var(--dot-size);
-      font-size: 58px;
-      line-height: 21px;
+      border-radius: 50%;
+      margin: 0 4px;
     }
-    .a { color: orange }
-    .v { color: #f7dd00 }
-    .j { color: green }
-    .n { color: black }
+    .a { background: orange }
+    .v { background: #f7dd00 }
+    .j { background: green }
+    .n { background: black }
 
 
     /* HANGULS */
@@ -846,12 +991,13 @@ export const createBoard = (board) => {
       flex-wrap: wrap;
       align-items: center;
       justify-content: center;
-      font-family: NanumSquare;
+      font-family: NanumMyeongjo, NanumSquare;
       font-weight: bold;
-      font-size: 3.4em;
+      font-size: var(--hangul-size);
 
       position: relative;
       top: calc(-1 * var(--case-top-offset));
+      left: calc(-1 * var(--case-left-offset));
     }
     .hangul > span:not(.sep-dot) {
       margin: 6px;
@@ -873,7 +1019,16 @@ export const createBoard = (board) => {
       display: flex;
       flex-direction: column;
       align-items: center;
-      font-size: 23px;
+      font-size: var(--meaning-size);
+      white-space: nowrap;
+      font-weight: 900;
+
+      position: relative;
+      left: calc(-1 * var(--case-left-offset) + 10px);
+    }
+    .meanings[long] {
+      font-size: 14px;
+      white-space: normal;
     }
 
 
@@ -900,10 +1055,10 @@ export const createBoard = (board) => {
     <header>
       <span>board #${index}</span>
       <div class="legend">
-        <span class="dot v">•</span><span>동</span>
-        <span class="dot a">•</span><span>부</span>
-        <span class="dot j">•</span><span>형용</span>
-        <span class="dot n">•</span><span>명</span>
+        <span class="dot v"></span><span>동</span>
+        <span class="dot a"></span><span>부</span>
+        <span class="dot j"></span><span>형용</span>
+        <span class="dot n"></span><span>명</span>
       </div>
     </header>
 
@@ -913,14 +1068,14 @@ export const createBoard = (board) => {
         ${b.hg.map(hg => html`<span class="sep-dot">•</span><span>${hg}</span>`)}
       </div>
 
-      <div class="meanings">
-        ${b.meanings.map(m => html`<span>${m}</span>`)}
+      <div class="meanings" ?long="${b.meanings.findIndex(m => formatMeaning(m).length > 20) > -1}">
+        ${b.meanings.map(m => html`<span>${formatMeaning(m)}</span>`)}
       </div>
 
       <span class="hanja">${b.hj}</span>
       <div class="hanja-info">
         <div class="colors">
-          ${b.type.split('').map(t => html`<span class="dot ${t}">•</span>`)}
+          ${b.type.split('').map(t => html`<span class="dot ${t}"></span>`)}
         </div>
         <span class="pinyins">${b.pinyins.join('/')}</span>
       </div>
@@ -929,6 +1084,9 @@ export const createBoard = (board) => {
   `;
 }
 
+const formatMeaning = (meaning) => {
+  return meaning.replace(/\(.*\)/g, '').trim();
+}
 
 
 import * as _self from './boards.js';
@@ -936,4 +1094,43 @@ export const getRandom = () => {
   const boards = Object.keys(_self).filter(p => p.match(/^board/));
   const board = eval(boards[Math.floor(Math.random() * boards.length)]);
   return board[Math.floor(Math.random() * board.length)];
+}
+
+window.isInBoard = (character) => {
+  const inboards = [];
+
+  const boards = Object.keys(_self).filter(p => p.match(/^board/));
+  for (const board of boards) {
+    let o = eval(board);
+    if (o.findIndex(p => p.hj === character) > -1) {
+      inboards.push(board);
+    }
+  }
+
+  return inboards;
+}
+
+export const getHanjas = () => {
+  const characters = new Set;
+  const hanjas = Object.keys(_self).filter(p => p.match(/^board/)).map(n => eval(n)).reduce((a, b) => a.concat(b));
+  const uniques = [];
+
+  for (const h of hanjas) {
+    if (!characters.has(h.hj)) {
+      characters.add(h.hj);
+      uniques.push(h);
+    }
+  }
+
+  return uniques;
+}
+
+export const getHanjasCount = () => {
+  const boards = Object.keys(_self).filter(p => p.match(/^board/));
+  let total = 0;
+  for (const board of boards) {
+    let o = eval(board);
+    total += o.length;
+  }
+  return total;
 }

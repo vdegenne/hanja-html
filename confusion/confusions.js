@@ -73,6 +73,23 @@ export const confusion2 = {
   }
 }
 
+// 覺 and 學
+export const confusion3 = {
+  langs: ['all'],
+  char1: {
+    name: '覺',
+    meanings: {
+      'all': ['to become aware', 'to feel', 'être conscient(e)', 'ressentir', '깨닫다']
+    }
+  },
+  char2: {
+    name: '學',
+    meanings: {
+      'all': ['to study', 'science', 'apprendre', '배우다', '학문']
+    }
+  }
+}
+
 
 export const createConfusionCard = (confusion, lang) => {
 
@@ -84,11 +101,11 @@ export const createConfusionCard = (confusion, lang) => {
     html {
       --middle-width: 30px;
 
-      --side-padding: 30px; /* reference value */
+      --side-padding: 50px; /* reference value */
       --en-side-padding: 30px;
       --kr-side-padding: 44px;
 
-      --sep-height: 400px; /* reference value */
+      --sep-height: 200px; /* reference value */
       --en-sep-height: var(--sep-height);
 
       --en-font-size: 23px;
@@ -120,6 +137,7 @@ export const createConfusionCard = (confusion, lang) => {
       font-size: 120px;
       margin: 0 0 14px;
       color: #272727;
+      font-weight: 100;
     }
 
     .side .tags {
@@ -180,13 +198,15 @@ export const createConfusionCard = (confusion, lang) => {
   </style>
   <div class="card border">
 
-    <header><span>confusion#${index}</span><span class="${classMap({korean: lang==='kr'})}">${langs[lang]}</span></header>
+    <header><span>confusion #${index}</span><span class="${classMap({ korean: lang === 'kr' })}">${langs[lang]}</span></header>
+    
+    <span style="font-size:30px;position:relative;bottom:30px;margin-bottom:40px;font-weight:bold;text-align:center;white-space:pre;color:black;background:yellow;line-height:30px">⚠  don't confuse  ⚠</span>
 
     <div class="inner ${classMap({korean: lang === 'kr', english: lang === 'en', french: lang === 'fr'})}">
       <div class="side left-side">
         <h2 class="chinese">${confusion.char1.name}</h2>
         <div class="tags">${confusion.char1.meanings[lang].map(m => html`<div class="tag">${m}</div>`)}</div>
-        <div class="details">${unsafeHTML(decorateHTML(confusion.char1.details[lang]))}</div>
+        <div class="details">${confusion.char1.details ? unsafeHTML(decorateHTML(confusion.char1.details[lang])) : null}</div>
       </div>
 
       <div class="separator"></div>
@@ -194,7 +214,7 @@ export const createConfusionCard = (confusion, lang) => {
       <div class="side right-side">
         <h2 class="chinese">${confusion.char2.name}</h2>
         <div class="tags">${confusion.char2.meanings[lang].map(m => html`<div class="tag">${m}</div>`)}</div>
-        <div class="details">${unsafeHTML(decorateHTML(confusion.char2.details[lang]))}</div>
+        <div class="details">${confusion.char2.details ? unsafeHTML(decorateHTML(confusion.char2.details[lang])) : null}</div>
       </div>
     </div>
   </div>

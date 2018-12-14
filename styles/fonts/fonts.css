@@ -18,6 +18,19 @@
   src: url(../fonts/NotoColorEmoji.ttf) format('truetype');
 }
 
+@font-face {
+  font-family: 'UhbeeNaHyun';
+  src: url(../fonts/UhbeeNaHyun/Uhbee\ NaHyun.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'UhBeeRice';
+  src: url(../fonts/UhBeeRice/UhBee\ Rice.ttf) format('truetype');
+}
+@font-face {
+  font-family: 'UhBeeSimplegirl';
+  src: url(../fonts/UhBeeSimplegirl/UhBee\ Simple\ girl.ttf) format('truetype');
+}
+
 body {
   font-family: Roboto;
 }
