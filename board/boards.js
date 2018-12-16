@@ -849,16 +849,148 @@ export const board10 = [
   }
 ];
 
-// 趣vj味n愛vn
-// export const board11 = 0;
+// 趣vj味n愛vn好vaj
+export const board11 = [
+  {
+    hj: "趣",
+    pinyins: [ "qù" ],
+    hg: [ "취", "추", "촉" ],
+    type: "vj",
+    meanings: [ "interesting", "to interest" ]
+  },
+  {
+    hj: "味",
+    pinyins: [ "wèi" ],
+    hg: [ "미", "매" ],
+    type: "n",
+    meanings: [ "taste", "smell", "classifier for drugs (in tcm)" ]
+  },
+  {
+    hj: "愛",
+    pinyins: [ "ài" ],
+    hg: [ "애" ],
+    type: "vn",
+    meanings: [ "to love", "to be fond of", "to like", "affection" ]
+  },
+  {
+    hj: "好",
+    pinyins: [ "hǎo", "hào" ],
+    hg: [ "호" ],
+    type: "vaj",
+    meanings: [
+      "good",
+      "well",
+      "proper",
+      "very",
+      "to be fond of",
+      "to have a tendency to"
+    ]
+  }
+];
 
-// (async () => console.log(await createBoardArray('腦n')))();
+// 老j師n看v電nj影n視v對vaj不a起v
+export const board12 = [
+  {
+    hj: "老",
+    pinyins: ["lǎo"],
+    hg: ["노", "로"],
+    type: "j",
+    meanings: ["old"]
+  },
+  {
+    hj: "師",
+    pinyins: ["shī"],
+    hg: ["사"],
+    type: "n",
+    meanings: ["teacher", "master", "expert"]
+  },
+  {
+    hj: "看",
+    pinyins: ["kàn"],
+    hg: ["간"],
+    type: "v",
+    meanings: ["to see", "to look at", "to watch", "to read"]
+  },
+  {
+    hj: "電",
+    pinyins: ["diàn"],
+    hg: ["전"],
+    type: "nj",
+    meanings: ["electric", "electricity", "electrical"]
+  },
+  {
+    hj: "影",
+    pinyins: ["yǐng"],
+    hg: ["영"],
+    type: "n",
+    meanings: [
+      "shadow",
+      "reflection",
+      "movie",
+      "film",
+      "photograph",
+      "image",
+      "picture"
+    ]
+  },
+  {
+    hj: "視",
+    pinyins: ["shì"],
+    hg: ["시"],
+    type: "v",
+    meanings: ["to look at", "to regard", "to inspect"]
+  },
+  {
+    hj: "對",
+    pinyins: ["duì"],
+    hg: ["대"],
+    type: "vaj",
+    meanings: [
+      "to face",
+      "to confront",
+      "to match",
+      "towards",
+      "at",
+      "right",
+      "correct"
+    ]
+  },
+  {
+    hj: "不",
+    pinyins: ["bù"],
+    hg: ["부", "불"],
+    type: "a",
+    meanings: ["(negative prefix)", "not", "no"]
+  },
+  {
+    hj: "起",
+    pinyins: ["qǐ"],
+    hg: ["기"],
+    type: "v",
+    meanings: [
+      "to rise",
+      "to raise",
+      "to get up",
+      "classifier for groups (batch, group, etc...)"
+    ]
+  }
+];
 
+// (async () => console.log(await createBoardArray(
+//   '老j師n看v電nj影n視v對vaj不a起v'
+// )))();
 
-export const createBoard = (board) => {
+const _board = 'board12';
 
-  const index = getIndex(board);
-  board = eval(board);
+export const createBoard = (board = _board) => {
+
+  // const index = getIndex(board);
+  // board = eval(board);
+  const index = 1;
+  board = board2.concat(board3).concat(board4).concat(board5).concat(board6).concat(board7).concat(board8).concat(board9).concat(board10).concat(board11).concat(board12);
+  board.shift(); board.shift();
+  board = board.concat(board).concat(board);
+  board.splice(0, 11);
 
   const content = ['hanjas', 'meanings', 'hanguls'];
   let contentIndex = 0;
@@ -871,28 +1003,29 @@ export const createBoard = (board) => {
   return html`
   <style>
     html {
-      --hanja-size: 300px;
-      --hangul-size: 200px;
-      --pinyin-size: 28px;
-      --meaning-size: 40px;
+      --hanja-size: 40px;
+      --hangul-size: 80px;
+      --pinyin-size: 24px;
+      --meaning-size: 20px;
 
-      --dot-size: 18px;
+      --dot-size: 12px;
 
       --case-top-offset: 0px;
-      --case-left-offset: 0;
+      --case-left-offset: 0px;
     }
 
     .card {
       flex-wrap: wrap;
       flex-direction: row;
       
-      padding: 25px;
+      padding: 20px;
       box-sizing: border-box;
     }
     .card > header {
       background: #f5f5f5;
       box-shadow: none;
       padding-right: 4px;
+      display: none;
     }
 
     .case {
@@ -902,7 +1035,7 @@ export const createBoard = (board) => {
       align-items: center;
       width: calc(100% / ${Math.sqrt(board.length)});
       height: calc(100% / ${Math.sqrt(board.length)});
-      padding: 10px;
+      padding: 0px;
       box-sizing: border-box;
 
       /* border: 1px solid grey; */
@@ -925,17 +1058,18 @@ export const createBoard = (board) => {
     }
     .legend > span:nth-child(2n) {
       font-family: NanumSquare;
-      font-weight: bold;
+      /* font-weight: bold; */
       margin: 0 6px 0 0px;
     }
     .legend .dot {
-      width: 12px;
-      height: 12px;
+      width: 9px;
+      height: 9px;
+      margin: 0 4px 0 4px;
     }
 
     .hanja {
       font-family: 'UD Digi Kyokasho NK-R';
-
+      color: #2b2b2b;
       /* margin: 0 0 10px 0; */
 
       font-size: var(--hanja-size);
@@ -949,7 +1083,8 @@ export const createBoard = (board) => {
       width: var(--hanja-size);
       /* margin-top: 10px; */
       position: relative;
-      top: 15px;
+      top: 8px;
+      display: none !important;
     }
     .colors {
       display: flex;
@@ -977,7 +1112,7 @@ export const createBoard = (board) => {
       width: var(--dot-size);
       height: var(--dot-size);
       border-radius: 50%;
-      margin: 0 4px;
+      margin: 0 2px;
     }
     .a { background: orange }
     .v { background: #f7dd00 }
@@ -1004,7 +1139,11 @@ export const createBoard = (board) => {
     }
 
     .hangul2 {
-      font-size: 2.6em;
+      font-size: 52px;
+    }
+
+    .hangul3 {
+      font-size: 48px;
     }
 
     .hangul4 {
@@ -1024,10 +1163,11 @@ export const createBoard = (board) => {
       font-weight: 900;
 
       position: relative;
-      left: calc(-1 * var(--case-left-offset) + 10px);
+      left: calc(-1 * var(--case-left-offset) - 6px);
+      top: calc(-1 * var(--case-top-offset) - 4px);
     }
     .meanings[long] {
-      font-size: 14px;
+      font-size: 24px;
       white-space: normal;
     }
 
@@ -1051,7 +1191,7 @@ export const createBoard = (board) => {
     }
   </style>
   
-  <div class="card border" @click="${function (e) { switchContent(this) }}" hanjas>
+  <div class="card" @click="${function () { switchContent(this) }}" hanjas>
     <header>
       <span>board #${index}</span>
       <div class="legend">
@@ -1062,17 +1202,17 @@ export const createBoard = (board) => {
       </div>
     </header>
 
-    ${board.map(b => html`
+    ${board.map((b, i) => html`
     <div class="case">
       <div class="hangul hangul${b.hg.length}">
         ${b.hg.map(hg => html`<span class="sep-dot">•</span><span>${hg}</span>`)}
       </div>
 
-      <div class="meanings" ?long="${b.meanings.findIndex(m => formatMeaning(m).length > 20) > -1}">
+      <div class="meanings" ?long="${b.meanings.findIndex(m => formatMeaning(m).length > 24) > -1}">
         ${b.meanings.map(m => html`<span>${formatMeaning(m)}</span>`)}
       </div>
 
-      <span class="hanja">${b.hj}</span>
+      <span class="hanja" style="${gradientcolorExperiment(i, board.length)}">${b.hj}</span>
       <div class="hanja-info">
         <div class="colors">
           ${b.type.split('').map(t => html`<span class="dot ${t}"></span>`)}
@@ -1084,9 +1224,7 @@ export const createBoard = (board) => {
   `;
 }
 
-const formatMeaning = (meaning) => {
-  return meaning.replace(/\(.*\)/g, '').trim();
-}
+const formatMeaning = (meaning) => meaning.replace(/\(.*\)/g, '').trim();
 
 
 import * as _self from './boards.js';
@@ -1134,3 +1272,15 @@ export const getHanjasCount = () => {
   }
   return total;
 }
+
+import { styleMap } from '../node_modules/lit-html/directives/style-map.js';
+const gradientcolorExperiment = (i, total) => {
+  const percent = (100 * i) / total;
+  let rgb = (percent * 255) / 100;
+  let r = Math.floor(Math.random() * 255);
+  let g = Math.floor(Math.random() * 255);
+  let b = Math.floor(Math.random() * 255);
+  return styleMap({
+    color: `rgb(${r}, ${g}, ${b})`
+  });
+};

@@ -11,25 +11,24 @@
     <p id="tags" style="width: 500px;margin:20px auto;">#languages#언어#言语#langues#중국어#한자#chinois#chinese#汉语#francais#english#한국어#영어#korean#coréen#공부#공부스타#공부스타그램#法语#韩语#英语</p>
 
     <script type="module">
-      import { render } from "../node_modules/lit-html/lit-html.js";
-      import { createConfusionCard, langs as cardLangs } from './confusions.js';
-      import {decorateContent} from '../util.js';
+      import { renderConfusionCard } from './confusions.js';
+      // import {decorateContent} from '../util.js';
 
-      const langs = Object.keys(cardLangs);
-      let langIndex = -1;
-      const content = document.getElementById('content');
+      renderConfusionCard(
+        document.getElementById('content')
+      );
 
-      window.renderCard = (lang) => render(createConfusionCard("confusion3", lang), content);
+      // window.renderCard = (lang) => render(createConfusionCard(), content);
 
-      content.addEventListener('click', () => {
-        if (++langIndex >= langs.length) {
-          langIndex = 0;
-        }
-        window.renderCard('all');
-        decorateContent(content);
-      });
+      // content.addEventListener('click', () => {
+      //   if (++langIndex >= langs.length) {
+      //     langIndex = 0;
+      //   }
+      //   window.renderCard('all');
+      //   decorateContent(content);
+      // });
 
-      content.click();
+      // content.click();
     </script>
   </body>
 </html>

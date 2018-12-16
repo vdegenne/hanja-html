@@ -12,6 +12,10 @@
 
   color: #484848;
 }
+.card.dark {
+  background: #282828;
+}
+
 .border {
   border: 1px solid black;
 }

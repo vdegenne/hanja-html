@@ -37,16 +37,33 @@ export const translation4 = {
   'jp': 'コンピュータ [konpyuuta]'
 }
 
+export const translation5 = {
+  'en': 'to watch/to look at',
+  'fr': 'regarder/observer',
+  'kr': '보다/감시하다 [boda/gamsihada]',
+  'cn': '看 [kàn]',
+  'jp': 'みる [miru]'
+}
 
-export const createTranslationCard = (translation) => {
+
+export const createTranslationCard = (translation = getLastTranslation()) => {
 
   const index = getIndex(translation);
   translation = eval(translation);
 
+  const img = new Image;
+  img.src = 'http://www.hkappo.org.hk/public1/images/PE01546_.gif';
+  img.width = 170;
+  img.style.position = 'absolute';
+  const changeImgPosition = (x, y) => {
+    img.style.left = `${x - img.width / 2}px`;
+    img.style.top = `${y - img.height / 2}px`;
+  }
+
   return html`
   <style>
     html {
-      --translation-font-size: 35px;
+      --translation-font-size: 30px;
       --translation-margin: 10px 0;
     }
     .card { border-color: #d4d4d4 }
@@ -70,18 +87,19 @@ export const createTranslationCard = (translation) => {
 
     .translation:not(.korean):not(.chinese) .trans {
       /* font-family: cursive; */
-      height: 46px;
+      font-size: 28px;
     }
     .trans.korean {
-      font-family: UhBeeRice;
-      font-size: 30px;
+      font-family: NanumMyeongjo;
+      font-size: 25px;
+      font-weight: 900;
     }
     
     .pronounciations {
-      font-size: 24px;
+      font-size: 22px;
 
       font-family: Roboto;
-      color: #ffca7c;
+      color: #80cbc4;
       
       margin-left: 18px;
     }
@@ -95,15 +113,14 @@ export const createTranslationCard = (translation) => {
     }
 
     .pronounciations > span:not(:first-of-type):before {
-      content: '/';
+      content: '⸱';
       margin: 0 4px;
     }
   </style>
-  <div class="card border">
+  <div class="card border" @click="${(e) => changeImgPosition(e.layerX, e.layerY)}">
     <header><span>translations #${index}</span></header>
     
-
-    <div style="height:70px"></div>
+    <div style="height:0px"></div>
 
     ${Object.keys(translation).map(lang => html`
       <div class="translation ${classMap({ korean: lang === 'kr', chinese: lang === 'cn' || lang === 'jp' })}">
@@ -117,17 +134,9 @@ export const createTranslationCard = (translation) => {
       </div>
     `)}
 
+    <div style="height:80px"></div>
 
-    <style>
-      img {
-        position: absolute;
-        top: 50px;
-        /* bottom: 0; */
-        right: 110px;
-        width: 190px;
-      }
-    </style>
-    <img src="http://pic.90sjimg.com/design/01/42/67/84/58f02c6788e01.png">
+    ${img}
   </div>`
 };
 
@@ -150,4 +159,10 @@ const parts = (raw) => {
   }
 
   return parts;
+}
+
+import * as _self from './translations.js';
+const getLastTranslation = () => {
+  const translations = Object.keys(_self).filter(p => p.match(/translation/));
+  return translations.reverse().shift();
 }

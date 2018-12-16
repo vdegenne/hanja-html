@@ -8,21 +8,27 @@
 
 <body>
   <style>
+    #content-wrapper {
+      width: fit-content;
+      border: 1px solid black;
+    }
     #tags {
       width: 600px;
       margin: 20px auto 0 auto;
     }
   </style>
-  <div id="content"></div>
+  <div id="content-wrapper">
+    <div id="content"></div>
+  </div>
 
-  <p id="tags">#한자#한자어#중국어#한글#coréen#어학#유학#언어#맞팔#선팔#공부스타#공부#공부스타그램#문자#漢語#汉语#中國語#中国语#chinese#languages#studying#chinois</p>
+  <p id="tags">#한자#한자어#중국어#한글#coréen#어학#유학#언어#맞팔#선팔#공부스타#공부#공부스타그램#문자#漢語#汉语#中國語#中国语#chinese#languages#studying#chinois#写真好きな人と繋がりたい</p>
 
   <script type="module">
     import { createBoard } from "./boards.js";
     import { render } from '../node_modules/lit-html/lit-html.js';
     
     render(
-      createBoard("board10"),
+      createBoard(),
       document.getElementById('content')
     );
   </script>

@@ -185,7 +185,7 @@
         if (!padding) {
           padding = knownHanjas.size;
         }
-        knownHanjas = new Set([...knownHanjas].cloneSlice(0, padding));
+        knownHanjas = new Set([...knownHanjas].shuffle().cloneSlice(0, padding));
         saveData();
 
         if (hanja === null) {

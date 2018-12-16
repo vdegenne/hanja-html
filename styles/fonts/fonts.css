@@ -30,6 +30,10 @@
   font-family: 'UhBeeSimplegirl';
   src: url(../fonts/UhBeeSimplegirl/UhBee\ Simple\ girl.ttf) format('truetype');
 }
+@font-face {
+  font-family: 'UhBeeBongSik';
+  src: url(../fonts/UhBeeBongSik/UhBee\ BongSik.ttf) format('truetype');
+}
 
 body {
   font-family: Roboto;
@@ -37,7 +41,7 @@ body {
 
 .chinese {
   font-family: 'UD Digi Kyokasho NK-R';
-  font-size: 1.4em;
+  font-size: 24px;
 }
 
 .korean {

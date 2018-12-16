@@ -116,3 +116,17 @@ export const playPinyin = (pinyin) => {
   const audio = new Audio(`https://dictionary.writtenchinese.com/sounds/${getPinyinNumericSyntax(pinyin)}.mp3`);
   setTimeout(() => audio.play(), 1000);
 }
+
+
+export const shuffleArray = (arr) => {
+  let aIndex, bIndex, temp;
+  for (let i = 0; i < 999; ++i) {
+    aIndex = Math.floor(Math.random() * arr.length);
+    bIndex = Math.floor(Math.random() * arr.length);
+    temp = arr[aIndex];
+    arr[aIndex] = arr[bIndex];
+    arr[bIndex] = temp;
+  }
+  return arr;
+}
+Array.prototype.shuffle = function () { return shuffleArray(this) }

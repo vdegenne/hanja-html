@@ -22,9 +22,8 @@ export const createCard = (general) => {
   general = eval(general);
 
   let langIndex = 0;
-  const getLang = () => general.langs[eval(`${langIndex}%${general.langs.length}`)]
+  const getLang = () => general.langs[eval(`${langIndex}%${general.langs.length}`)];
 
-  // const switcha
   return html`
   <style>
     .inner {

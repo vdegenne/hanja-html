@@ -1,7 +1,8 @@
 import { html, render } from "../node_modules/lit-html/lit-html.js";
 import { classMap } from '../node_modules/lit-html/directives/class-map.js';
+import { styleMap } from '../node_modules/lit-html/directives/style-map.js';
 import { unsafeHTML } from "../node_modules/lit-html/directives/unsafe-html.js";
-import { decorateHTML, getIndex } from '../util.js';
+import { decorateHTML, getIndex, isKorean, isChinese, isJapanese } from '../util.js';
 
 
 export const langs = {
@@ -79,144 +80,169 @@ export const confusion3 = {
   char1: {
     name: '覺',
     meanings: {
-      'all': ['to become aware', 'to feel', 'être conscient(e)', 'ressentir', '깨닫다']
+      'all': ['to become aware/to feel', 'être conscient(e)/ressentir', '깨닫다']
     }
   },
   char2: {
     name: '學',
     meanings: {
-      'all': ['to study', 'science', 'apprendre', '배우다', '학문']
+      'all': ['to study/science', 'apprendre', '배우다/학문']
     }
   }
 }
 
+export const confusion4 = {
+  langs: ['all'],
+  char1: {
+    name: '說',
+    meanings: {
+      'all': ['to speak/to explain/to persuade', 'raconter/persuader', '말하다/이야기하다/서술하다', 'じょす/はなす']
+    }
+  },
+  char2: {
+    name: '話',
+    meanings: {
+      'all': ['(spoken) words/speech', 'mots (parlés)', '말씀/이야기', 'はなし']
+    }
+  }
+}
 
-export const createConfusionCard = (confusion, lang) => {
+export const renderConfusionCard = (content, confusion = lastConfusionName(), lang) => {
 
   const index = getIndex(confusion);
   confusion = eval(confusion);
 
-  return html`
+  if (!lang) {
+    lang = confusion.langs[0]; // take the first language
+  }
+
+  const renderNextLanguage = () => renderConfusionCard(
+    content,
+    `confusion${index}`,
+    confusion.langs[confusion.langs.indexOf(lang) + 1] || confusion.langs[0]
+  );
+  const getLanguageIndex = () => confusion.langs.indexOf(lang);
+  
+  const meaningStyle = (groupIndex) => styleMap({
+    background: colors[confusion.langs.length > 1 ? getLanguageIndex() : groupIndex]
+  });
+  const languageClasses = (meaning) => classMap({
+    korean: isKorean(meaning),
+    chinese: isChinese(meaning) || isJapanese(meaning)
+  });
+
+  render(html`
   <style>
-    html {
-      --middle-width: 30px;
-
-      --side-padding: 50px; /* reference value */
-      --en-side-padding: 30px;
-      --kr-side-padding: 44px;
-
-      --sep-height: 200px; /* reference value */
-      --en-sep-height: var(--sep-height);
-
-      --en-font-size: 23px;
-      --fr-font-size: 23px;
+    .card.dark header {
+      background: #424242;
+      color: #bdbdbd;
     }
 
     .inner {
       display: flex;
-      justify-content: space-evenly;
-      align-items: flex-start;
-
       width: 100%;
     }
-
-    /* SIDE */
     .side {
-      width: 100%;
-      padding: 10px var(--side-padding);
-      /* background: grey; */
-    }
-    .inner.english .side {
-      padding: 10px var(--en-side-padding);
-    }
-    .inner.korean .side {
-      padding: 10px var(--kr-side-padding);
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+
+      padding: 0 30px 0 44px;
     }
 
-    .side h2 {
+    .side h1 {
+      margin: 0;
       font-size: 120px;
-      margin: 0 0 14px;
-      color: #272727;
       font-weight: 100;
+      font-family: cursive;
+      /* color: grey; */
     }
-
-    .side .tags {
-      margin: 24px 0;
-    }
-    .side .tags > .tag {
-      font-size: 20px;
-
-      display: inline-block;
-      padding: 4px 8px;
-      margin: 0 4px 4px 0;
-      
-      background: #623ed2;
+    .card.dark .side h1 {
       color: #fff;
-      border-radius: 2px;
     }
-    .inner.korean .side .tags > .tag {
-      /* font-family: NanumSquareRound; */
+    .side .meanings {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 30px 0;
     }
+    .side .meanings > span {
+      font-size: 18px;
+      white-space: nowrap;
+      margin: 0 6px 6px 0;
+      padding: 5px 8px;
+      border-radius: 1px;
+      height: 34px;
+      box-sizing: border-box;
+      display: flex;
+      justify-content: center;
+      align-items: center;
 
-    /* DETAILS */
-    .side .details {
-      font-size: 24px;
-
-      line-height: 36px;
-      text-align: justify;
+      color: #fff;
     }
-    .inner.english .side .details {
-      font-size: var(--en-font-size);
+    .side .meanings > span.korean {
+      font-size: 19px;
+      padding-top: 8px;
     }
-    .inner.french .side .details {
-      font-size: var(--fr-font-size);
-    }
-    .inner.french .left-side .details {
-      margin-top: 60px;
-    }
-    .inner.korean .right-side .details {
-      margin-top: 60px;
-    }
-
 
     .separator {
-      height: var(--sep-height);
-      margin-top: 40px;
-
-      width: 8px;
+      width: 2px;
+      background: #616161;
       border-radius: 50%;
-      background: #eaeaea;
+      margin: 100px 0;
+      opacity: .5;
+    }
 
-      /* margin: 0 40px; */
-    }
-    .inner.korean .separator {
-      height: var(--sep-height);
-    }
-    .inner.english .separator {
-      height: var(--en-sep-height);
+    .alert {
+      color: #fff;
+      font-size: 28px;
+      /* margin-bottom: 29px;
+      position: relative;
+      top: -22px; */
+      /* background: yellow;
+      color: #000;
+      padding: 0 10px; */
+      color: #f5f5f5;
     }
   </style>
-  <div class="card border">
+  <div class="card dark" lang="${lang}" @click="${renderNextLanguage}">
+    <header>
+      <span>confusion #${index}</span>
+      <span>${lang !== 'all' ? lang : null}</span>
+    </header>
 
-    <header><span>confusion #${index}</span><span class="${classMap({ korean: lang === 'kr' })}">${langs[lang]}</span></header>
-    
-    <span style="font-size:30px;position:relative;bottom:30px;margin-bottom:40px;font-weight:bold;text-align:center;white-space:pre;color:black;background:yellow;line-height:30px">⚠  don't confuse  ⚠</span>
+    <!-- <div class="alert">⚠️ don't confuse</div> -->
 
-    <div class="inner ${classMap({korean: lang === 'kr', english: lang === 'en', french: lang === 'fr'})}">
-      <div class="side left-side">
-        <h2 class="chinese">${confusion.char1.name}</h2>
-        <div class="tags">${confusion.char1.meanings[lang].map(m => html`<div class="tag">${m}</div>`)}</div>
-        <div class="details">${confusion.char1.details ? unsafeHTML(decorateHTML(confusion.char1.details[lang])) : null}</div>
+    <div class="inner">
+      <div class="side">
+        <h1 class="chinese">${confusion.char1.name}</h1>
+        <div class="meanings">
+          ${confusion.char1.meanings[lang].map((m, i) => m.split('/').map(m =>
+            html`<span style="${meaningStyle(i)}" class="${languageClasses(m)}">${m}</span>`
+          ))}
+        </div>
       </div>
-
       <div class="separator"></div>
-
-      <div class="side right-side">
-        <h2 class="chinese">${confusion.char2.name}</h2>
-        <div class="tags">${confusion.char2.meanings[lang].map(m => html`<div class="tag">${m}</div>`)}</div>
-        <div class="details">${confusion.char2.details ? unsafeHTML(decorateHTML(confusion.char2.details[lang])) : null}</div>
+      <div class="side">
+        <h1 class="chinese">${confusion.char2.name}</h1>
+        <div class="meanings">
+          ${confusion.char2.meanings[lang].map((m, i) => m.split('/').map(m =>
+            html`<span style="${meaningStyle(i)}" class="${languageClasses(m)}">${m}</span>`
+          ))}
+        </div>
       </div>
     </div>
   </div>
-  `
+  `, content);
+
+  return;
 }
+
+
+import * as _self from './confusions.js';
+
+const lastConfusionName = () => {
+  const confusions = Object.keys(_self).filter(p => p.match(/confusion/));
+  return confusions.reverse().shift();
+}
+
+const colors = ['#00796b', '#03a9f4', '#ff9800', '#5e35b1'].shuffle();
