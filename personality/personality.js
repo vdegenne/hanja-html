@@ -18,11 +18,51 @@ export const personality1 = [
     hj: '史',
     meanings: ['history', 'histoire', '역사', 'れきし']
   }
-]
+];
 
-const _name = 'personality1';
+export const personality2 = [
+  {
+    hj: '起',
+    meanings: ['to get up/to raise (sth)/to start', 'se lever/soulever/initier (une action)', '일어나다/시작하다', 'おきる']
+  },
+  {
+    hj: '趣',
+    meanings: ['interesting/amusing', 'intéressant/amusant/intérêt/goût', '뜻/취지/흥미/재미/취미/풍취', 'おもむき/しゅみ/たのしみ/ふうしゅ']
+  }
+];
 
-export const createCard = (name = _name) => {
+export const personality3 = [
+  {
+    hj: '市',
+    pinyin: 'shì',
+    meanings: ['city/market', 'ville/marché', '시가/저자/시장/장', 'し/いち/いちば/しせい']
+  },
+  {
+    hj: '師',
+    pinyin: 'shī',
+    meanings: ['teacher/master/model', 'professeur/maitre/modèle', '스승', 'し/ししょう/しはん/きょうし']
+  }
+];
+
+export const personality4 = [
+  {
+    hj: '書',
+    pinyin: 'shū',
+    meanings: ['book/document/letter/to write', 'livre/document/lettre/écrire', '글/글씨/글자/편지/서류/쓰다', 'しょ/しょるい/ぶんしょ/かく']
+  },
+  {
+    hj: '妻',
+    pinyin: 'qī',
+    meanings: ['wife', 'femme/épouse', '아내', 'つま']
+  },
+  {
+    hj: '事',
+    pinyin: 'shì',
+    meanings: ['affair/work/case/situation/thing', 'affaire/travail/accident/fait/chose (immatérielle)', '직업/사업/사고/일', 'しごと/じぎょう/じこ/こと']
+  }
+];
+
+export const createCard = (name = getLastPersonality()) => {
 
   const index = getIndex(name);
   const elements = eval(name);
@@ -30,10 +70,11 @@ export const createCard = (name = _name) => {
   return html`
   <style>
     html {
-      --inner-width: 500px;
+      --inner-width: 540px;
+      --separator-height: 40px;
 
       --hanja-font-size: 106px;
-      --meaning-font-size: 22px;
+      --meaning-font-size: 18px;
     }
     .element {
       display: flex;
@@ -49,7 +90,9 @@ export const createCard = (name = _name) => {
       height: 2px;
       background: #dbdbdb;
       border-radius: 50%;
-      margin: 31px 0 18px 0;
+
+      margin-top: calc(var(--separator-height) / 2 + 6px);
+      margin-bottom: calc(var(--separator-height) / 2 - 6px);
     }
     .separator:last-of-type {
       display: none;
@@ -70,9 +113,9 @@ export const createCard = (name = _name) => {
       align-items: center;
       white-space: nowrap;
 
-      padding: 0 10px;
+      padding: 0 9px;
       margin: 0 3px 4px 0;
-      height: 36px;
+      height: 31px;
 
       font-size: var(--meaning-font-size);
       color: #fff;
@@ -80,12 +123,12 @@ export const createCard = (name = _name) => {
       box-sizing: border-box;
     }
     .meanings > span.korean {
-      font-size: calc(var(--meaning-font-size) - 4px);
+      font-size: calc(var(--meaning-font-size) - 1px);
       line-height: 1px;
-      padding-top: 3px;
+      padding-top: 2px;
     }
   </style>
-  <div class="card border">
+  <div class="card">
     <header>
       <span>personality #${index}</span>
     </header>
@@ -108,6 +151,12 @@ export const createCard = (name = _name) => {
 const setClass = (m) => classMap({
   korean: isKorean(m),
   chinese: isJapanese(m)
-})
+});
 
-const colors = ['#ff0058', '#2ccf33', '#ffc107', 'blue'];
+import * as _self from './personality.js';
+const getLastPersonality = () => {
+  const personalities = Object.keys(_self).filter(p => p.match(/^personality/));
+  return personalities.reverse()[0];
+}
+
+const colors = ['#795548', '#4caf50', '#ffb300', '#1976d2', '#673ab7'].shuffle();

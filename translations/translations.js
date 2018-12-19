@@ -45,6 +45,13 @@ export const translation5 = {
   'jp': 'みる [miru]'
 }
 
+export const translation6 = {
+  'en': 'I/me',
+  'fr': 'Je/moi [즈/뫄]',
+  'kr': '나/저 [na/jeo]',
+  'cn': '我 [wǒ]',
+  'jp': '私/わたし [watashi]'
+}
 
 export const createTranslationCard = (translation = getLastTranslation()) => {
 
@@ -52,8 +59,8 @@ export const createTranslationCard = (translation = getLastTranslation()) => {
   translation = eval(translation);
 
   const img = new Image;
-  img.src = 'http://www.hkappo.org.hk/public1/images/PE01546_.gif';
-  img.width = 170;
+  img.src = 'https://www.pagetgorman.org/platforms/PGSS/Images/Dictionary/m/me.gif';
+  img.width = 120;
   img.style.position = 'absolute';
   const changeImgPosition = (x, y) => {
     img.style.left = `${x - img.width / 2}px`;
@@ -64,7 +71,7 @@ export const createTranslationCard = (translation = getLastTranslation()) => {
   <style>
     html {
       --translation-font-size: 30px;
-      --translation-margin: 10px 0;
+      --translation-margin: 8px 0 0 300px;
     }
     .card { border-color: #d4d4d4 }
 
@@ -81,7 +88,7 @@ export const createTranslationCard = (translation = getLastTranslation()) => {
     }
 
     .flag {
-      font-size: 50px;
+      font-size: 40px;
       margin: 0 20px 0;
     }
 
@@ -134,7 +141,7 @@ export const createTranslationCard = (translation = getLastTranslation()) => {
       </div>
     `)}
 
-    <div style="height:80px"></div>
+    <div style="height:0px"></div>
 
     ${img}
   </div>`
@@ -164,5 +171,11 @@ const parts = (raw) => {
 import * as _self from './translations.js';
 const getLastTranslation = () => {
   const translations = Object.keys(_self).filter(p => p.match(/translation/));
-  return translations.reverse().shift();
+  let top = getIndex(translations[0]);
+  for (const t of translations) {
+    if (getIndex(t) > top) {
+      top = getIndex(t);
+    }
+  }
+  return `translation${top}`;
 }

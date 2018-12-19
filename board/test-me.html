@@ -104,8 +104,9 @@
       let hanja;
       let knownHanjas  = new Set;
       let failed = new Set;
-      let hanjasCount = getHanjasCount();
       let hanjas = getHanjas();
+      let hanjasCount = hanjas.length;
+      
 
       content.addEventListener('click', () => {
         if (!content.hasAttribute('answer')) {

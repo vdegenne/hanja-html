@@ -91,6 +91,7 @@ export const confusion3 = {
   }
 }
 
+// 說 and 話
 export const confusion4 = {
   langs: ['all'],
   char1: {
@@ -106,6 +107,48 @@ export const confusion4 = {
     }
   }
 }
+
+// 起 and 話
+export const confusion5 = {
+  langs: ['all'],
+  char1: {
+    name: '起',
+    meanings: {
+      'all': ['to speak/to explain/to persuade', 'raconter/persuader', '말하다/이야기하다/서술하다', 'じょす/はなす']
+    }
+  },
+  char2: {
+    name: '話',
+    meanings: {
+      'all': ['(spoken) words/speech', 'mots (parlés)', '말씀/이야기', 'はなし']
+    }
+  }
+}
+
+// xī and qī
+export const confusion6 = {
+  langs: ['all'],
+  char1: {
+    name: 'xī',
+    meanings: {
+      all: ['稀/希/析/息/吸/犧/西/扱']
+    },
+    details: {
+      all: 'The pronunciation is similar to <b>/ʃi/</b> like "shee" in "sheep".'
+    }
+  },
+  char2: {
+    name: 'qī',
+    meanings: {
+      all: ['期/七/漆/凄/戚/欺/妻']
+    },
+    details: {
+      all: 'The pronunication is similar to <b>/tʃi/</b> like "chea" in "cheap".'
+    }
+  }
+}
+
+
 
 export const renderConfusionCard = (content, confusion = lastConfusionName(), lang) => {
 
@@ -133,6 +176,12 @@ export const renderConfusionCard = (content, confusion = lastConfusionName(), la
 
   render(html`
   <style>
+    html {
+      --side-padding-left: 44px;
+      --side-padding-right: 30px;
+
+      --h1-font-family: Consolas;
+    }
     .card.dark header {
       background: #424242;
       color: #bdbdbd;
@@ -146,15 +195,21 @@ export const renderConfusionCard = (content, confusion = lastConfusionName(), la
       flex: 1;
       display: flex;
       flex-direction: column;
-
-      padding: 0 30px 0 44px;
+    }
+    .left.side {
+      padding-left: var(--side-padding-left);
+      padding-right: var(--side-padding-right);
+    }
+    .right.side {
+      padding-left: var(--side-padding-right);
+      padding-right: var(--side-padding-left);
     }
 
     .side h1 {
       margin: 0;
       font-size: 120px;
       font-weight: 100;
-      font-family: cursive;
+      font-family: var(--h1-font-family);
       /* color: grey; */
     }
     .card.dark .side h1 {
@@ -166,12 +221,12 @@ export const renderConfusionCard = (content, confusion = lastConfusionName(), la
       margin: 30px 0;
     }
     .side .meanings > span {
-      font-size: 18px;
+      font-size: 27px;
       white-space: nowrap;
       margin: 0 6px 6px 0;
       padding: 5px 8px;
       border-radius: 1px;
-      height: 34px;
+      height: 44px;
       box-sizing: border-box;
       display: flex;
       justify-content: center;
@@ -182,6 +237,20 @@ export const renderConfusionCard = (content, confusion = lastConfusionName(), la
     .side .meanings > span.korean {
       font-size: 19px;
       padding-top: 8px;
+    }
+
+    .side .details {
+      font-size: 24px;
+      padding: 0 10px;
+    }
+    .details .definition {
+      color: #ff9800;
+    }
+    .details .definition:before {
+      content: '“';
+    }
+    .details .definition:after {
+      content: '”';
     }
 
     .separator {
@@ -204,7 +273,7 @@ export const renderConfusionCard = (content, confusion = lastConfusionName(), la
       color: #f5f5f5;
     }
   </style>
-  <div class="card dark" lang="${lang}" @click="${renderNextLanguage}">
+  <div class="card" lang="${lang}" @click="${renderNextLanguage}">
     <header>
       <span>confusion #${index}</span>
       <span>${lang !== 'all' ? lang : null}</span>
@@ -213,30 +282,39 @@ export const renderConfusionCard = (content, confusion = lastConfusionName(), la
     <!-- <div class="alert">⚠️ don't confuse</div> -->
 
     <div class="inner">
-      <div class="side">
+      <div class="left side">
         <h1 class="chinese">${confusion.char1.name}</h1>
         <div class="meanings">
           ${confusion.char1.meanings[lang].map((m, i) => m.split('/').map(m =>
             html`<span style="${meaningStyle(i)}" class="${languageClasses(m)}">${m}</span>`
           ))}
         </div>
+        ${confusion.char1.details[lang] ? html`
+          <div class="details">${renderDetails(confusion.char1.details[lang])}</div>
+        ` : null}
       </div>
       <div class="separator"></div>
-      <div class="side">
+      <div class="right side">
         <h1 class="chinese">${confusion.char2.name}</h1>
         <div class="meanings">
           ${confusion.char2.meanings[lang].map((m, i) => m.split('/').map(m =>
             html`<span style="${meaningStyle(i)}" class="${languageClasses(m)}">${m}</span>`
           ))}
         </div>
+        ${confusion.char2.details[lang] ? html`
+          <div class="details">${renderDetails(confusion.char2.details[lang])}</div>
+        ` : null}
       </div>
     </div>
+
+    <div style="height:80px"></div>
   </div>
   `, content);
 
   return;
 }
 
+const renderDetails = (content) => unsafeHTML(decorateHTML(content));
 
 import * as _self from './confusions.js';
 

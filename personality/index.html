@@ -6,15 +6,26 @@
     <link rel="stylesheet" href="../styles/fonts/fonts.css">
   </head>
   <body>
-    <div id="content"></div>
+    <style>
+      .content-wrapper {
+        border: 1px solid black;
+        width: fit-content;
+      }
+    </style>
+    <div class="content-wrapper">
+      <div id="content"></div>
+    </div>
+
     <div id="tags" style="width:500px;margin: 20px auto;">#중국어#한어#한자#漢語#汉语#chinese#chinois#english#영어#japanese#日本#일본#french#프랑스어#languages#langues#언어#言语#공부스타그램#공부#공부스타#맞팔#선팔#study</div>
+
     <script type="module">
       import { createCard } from "./personality.js";
       import { render } from '../node_modules/lit-html/lit-html.js';
 
-      const content = document.getElementById('content');
-
-      render(createCard(), content);
+      render(
+        createCard(), 
+        document.getElementById('content')
+      );
     </script>
   </body>
 </html>

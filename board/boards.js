@@ -1,4 +1,6 @@
 import { html } from '../node_modules/lit-html/lit-html.js';
+import { styleMap } from '../node_modules/lit-html/directives/style-map.js';
+import { classMap } from '../node_modules/lit-html/directives/class-map.js';
 import { getIndex } from '../util.js';
 
 
@@ -22,6 +24,8 @@ export const createBoardArray = async (stringboard) => {
   
   return JSON.stringify(board, null, '');
 }
+window.createBoardArray = createBoardArray;
+
 export const getStringBoardDetails = (string) => {
   const details = [];
   let e, type;
@@ -976,21 +980,78 @@ export const board12 = [
   }
 ];
 
-// (async () => console.log(await createBoardArray(
-//   '老j師n看v電nj影n視v對vaj不a起v'
-// )))();
 
-const _board = 'board12';
+// 這n個n東n西n
+export const board13 = [
+  {
+    hj: "這",
+    pinyins: ["zhè"],
+    hg: ["저"],
+    type: "n",
+    meanings: ["this", "these"]
+  },
+  {
+    hj: "個",
+    pinyins: ["gè"],
+    hg: ["개"],
+    type: "n",
+    meanings: [
+      "individual",
+      "this",
+      "that",
+      "!classifier for people or objects in general"
+    ]
+  },
+  {
+    hj: "東",
+    pinyins: ["dōng"],
+    hg: ["동"],
+    type: "n",
+    meanings: ["east"]
+  },
+  {
+    hj: "西",
+    pinyins: ["xī"],
+    hg: ["서"],
+    type: "n",
+    meanings: ["the West"]
+  }
+];
 
-export const createBoard = (board = _board) => {
 
-  // const index = getIndex(board);
-  // board = eval(board);
-  const index = 1;
-  board = board2.concat(board3).concat(board4).concat(board5).concat(board6).concat(board7).concat(board8).concat(board9).concat(board10).concat(board11).concat(board12);
+let colorsForFunBoard;
+window.getColorsForFunBoard = () => colorsForFunBoard;
+export const createFunBoard = async (imgUrl) => {
+
+  let board = board2.concat(board3).concat(board4).concat(board5).concat(board6).concat(board7).concat(board8).concat(board9).concat(board10).concat(board11).concat(board12);
   board.shift(); board.shift();
   board = board.concat(board).concat(board);
   board.splice(0, 11);
+  for (const s of 't') {
+    board = board.concat(board).concat(board).concat(board);
+  }
+
+  board = [];
+  for (let i = 0; i < 1156; ++i) {
+    board.push({ hj: '甲', meanings: [], hg: [], pinyins: [], type: '' });
+  }
+
+  colorsForFunBoard = await getImageProminentColors(imgUrl, Math.sqrt(board.length), Math.sqrt(board.length), 0);
+
+  return createBoard(board);
+}
+
+export const createBoard = (board) => {
+  let index;
+
+  if (board === undefined) {
+    board = getLastBoardName();
+  }
+
+  if (typeof board === 'string') {
+    index = getIndex(board);
+    board = eval(board);
+  }
 
   const content = ['hanjas', 'meanings', 'hanguls'];
   let contentIndex = 0;
@@ -1003,29 +1064,34 @@ export const createBoard = (board = _board) => {
   return html`
   <style>
     html {
-      --hanja-size: 40px;
-      --hangul-size: 80px;
+      --hanja-size: 180px;
       --pinyin-size: 24px;
-      --meaning-size: 20px;
 
-      --dot-size: 12px;
+      --meaning-size: 40px;
+      --long-meaning-size: calc(var(--meaning-size) - 10px);
 
-      --case-top-offset: 0px;
-      --case-left-offset: 0px;
+      --hangul-size: 160px;
+
+      --dot-size: 15px;
+
+      --case-top-offset: -9px;
+      --case-left-offset: -8px;
     }
 
     .card {
       flex-wrap: wrap;
       flex-direction: row;
       
-      padding: 20px;
+      padding: 30px 0 0;
       box-sizing: border-box;
+
+      /* background: black; */
+      color: #263238;
     }
     .card > header {
       background: #f5f5f5;
       box-shadow: none;
       padding-right: 4px;
-      display: none;
     }
 
     .case {
@@ -1037,14 +1103,6 @@ export const createBoard = (board = _board) => {
       height: calc(100% / ${Math.sqrt(board.length)});
       padding: 0px;
       box-sizing: border-box;
-
-      /* border: 1px solid grey; */
-
-      position: relative;
-      top: var(--case-top-offset);
-      left: var(--case-left-offset);
-
-      color: #444444;
     }
 
     .legend {
@@ -1068,10 +1126,7 @@ export const createBoard = (board = _board) => {
     }
 
     .hanja {
-      font-family: 'UD Digi Kyokasho NK-R';
-      color: #2b2b2b;
-      /* margin: 0 0 10px 0; */
-
+      font-family: /* 'EmojiSymbols', */'UD Digi Kyokasho NK-R';
       font-size: var(--hanja-size);
       height: var(--hanja-size);
       line-height: var(--hanja-size);
@@ -1081,10 +1136,8 @@ export const createBoard = (board = _board) => {
       justify-content: space-between;
       align-items: center;
       width: var(--hanja-size);
-      /* margin-top: 10px; */
       position: relative;
-      top: 8px;
-      display: none !important;
+      top: calc(var(--case-top-offset) + 10px) !important;
     }
     .colors {
       display: flex;
@@ -1092,6 +1145,11 @@ export const createBoard = (board = _board) => {
     .pinyins {
       font-size: var(--pinyin-size);
       color: #8e8e8e;
+    }
+    .hanja, .hanja-info, .meanings, .hangul {
+      position: relative;
+      top: var(--case-top-offset);
+      left: var(--case-left-offset);
     }
 
     .sep-dot {
@@ -1117,7 +1175,7 @@ export const createBoard = (board = _board) => {
     .a { background: orange }
     .v { background: #f7dd00 }
     .j { background: green }
-    .n { background: black }
+    .n { background: #454545 }
 
 
     /* HANGULS */
@@ -1129,10 +1187,6 @@ export const createBoard = (board = _board) => {
       font-family: NanumMyeongjo, NanumSquare;
       font-weight: bold;
       font-size: var(--hangul-size);
-
-      position: relative;
-      top: calc(-1 * var(--case-top-offset));
-      left: calc(-1 * var(--case-left-offset));
     }
     .hangul > span:not(.sep-dot) {
       margin: 6px;
@@ -1161,13 +1215,9 @@ export const createBoard = (board = _board) => {
       font-size: var(--meaning-size);
       white-space: nowrap;
       font-weight: 900;
-
-      position: relative;
-      left: calc(-1 * var(--case-left-offset) - 6px);
-      top: calc(-1 * var(--case-top-offset) - 4px);
     }
     .meanings[long] {
-      font-size: 24px;
+      font-size: var(--long-meaning-size);
       white-space: normal;
     }
 
@@ -1193,7 +1243,7 @@ export const createBoard = (board = _board) => {
   
   <div class="card" @click="${function () { switchContent(this) }}" hanjas>
     <header>
-      <span>board #${index}</span>
+      <span style="${styleMap({visibility: index ? 'visible' : 'hidden'})}">board #${index}</span>
       <div class="legend">
         <span class="dot v"></span><span>동</span>
         <span class="dot a"></span><span>부</span>
@@ -1209,10 +1259,10 @@ export const createBoard = (board = _board) => {
       </div>
 
       <div class="meanings" ?long="${b.meanings.findIndex(m => formatMeaning(m).length > 24) > -1}">
-        ${b.meanings.map(m => html`<span>${formatMeaning(m)}</span>`)}
+        ${b.meanings.map(m => m[0] !== '!' ? html`<span>${formatMeaning(m)}</span>` : null)}
       </div>
 
-      <span class="hanja" style="${gradientcolorExperiment(i, board.length)}">${b.hj}</span>
+      <span class="hanja" style="${colorsForFunBoard ? hanjaFunBoardColor(i) : ''}">${b.hj}</span>
       <div class="hanja-info">
         <div class="colors">
           ${b.type.split('').map(t => html`<span class="dot ${t}"></span>`)}
@@ -1227,7 +1277,22 @@ export const createBoard = (board = _board) => {
 const formatMeaning = (meaning) => meaning.replace(/\(.*\)/g, '').trim();
 
 
+/**
+ * Board related functions
+ */
 import * as _self from './boards.js';
+
+const getLastBoardName = () => {
+  const boards = Object.keys(_self).filter(p => p.match(/^board/));
+  let top = getIndex(boards[0]);
+  for (const b of boards) {
+    if (getIndex(b) > top) {
+      top = getIndex(b);
+    }
+  }
+  return `board${top}`;
+}
+
 export const getRandom = () => {
   const boards = Object.keys(_self).filter(p => p.match(/^board/));
   const board = eval(boards[Math.floor(Math.random() * boards.length)]);
@@ -1273,14 +1338,106 @@ export const getHanjasCount = () => {
   return total;
 }
 
-import { styleMap } from '../node_modules/lit-html/directives/style-map.js';
-const gradientcolorExperiment = (i, total) => {
-  const percent = (100 * i) / total;
-  let rgb = (percent * 255) / 100;
-  let r = Math.floor(Math.random() * 255);
-  let g = Math.floor(Math.random() * 255);
-  let b = Math.floor(Math.random() * 255);
-  return styleMap({
-    color: `rgb(${r}, ${g}, ${b})`
-  });
-};
+const hanjaFunBoardColor = (i) => styleMap({
+  color: colorsForFunBoard[i] ? colorsForFunBoard[i].toString() : ''
+});
+
+
+const createEmptyContext = (width, height) => {
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
+  return canvas.getContext('2d');
+}
+const getImageContext = async (url) => {
+  const img = new Image();
+  img.src = url;
+  await new Promise(resolve => img.addEventListener('load', resolve));
+  const context = createEmptyContext(img.width, img.height);
+  context.drawImage(img, 0, 0);
+  return context;
+}
+
+CanvasRenderingContext2D.prototype.extract = function (sx, sy, sw, sh) {
+  const context = createEmptyContext(sw, sh);
+  context.putImageData(this.getImageData(sx, sy, sw, sh), 0, 0);
+  return context;
+}
+CanvasRenderingContext2D.prototype.stampInDocument = function () {
+  document.body.append(this.canvas);
+}
+
+class Color {
+  constructor(r, g, b) {
+    this.r = r;
+    this.g = g;
+    this.b = b;
+  }
+
+  isSimilar (color, range) {
+    const leftRange = Math.floor((range - 1) / 2);
+    const rightRange = Math.ceil((range - 1) / 2);
+    return (color.r >= this.r - leftRange && color.r <= this.r + rightRange)
+      && (color.g >= this.g - leftRange && color.g <= this.g + rightRange)
+      && (color.b >= this.b - leftRange && color.b <= this.b + rightRange);
+  }
+
+  toString() {
+    return `rgba(${this.r}, ${this.g}, ${this.b}, 1)`;
+  }
+
+  isBlack() {
+    return !(this.r && this.g && this.b);
+  }
+}
+
+
+const getImageProminentColors = async (url, widthDivision, heightDivision, similarRange = 5) => {
+  if (!heightDivision) {
+    heightDivision = widthDivision;
+  }
+
+  const context = await getImageContext(url);
+  const width = context.canvas.width;
+  const height = context.canvas.height;
+  const subw = Math.floor(width / widthDivision); // changed floor to ceil !
+  const subh = Math.floor(height / heightDivision); // changed floor to ceil !
+  const colors = [];
+
+
+  let pixels, clusters;
+  for (let y = 0; y < subh * heightDivision; y += subh) {
+    for (let x = 0; x < subw * widthDivision; x += subw) {
+      pixels = context.getImageData(x, y, subw, subh).data;
+      clusters = [];
+
+      let color, registered;
+      for (let offset = 0, datasize = subw * subh * 4; offset <= datasize; offset += 4) {
+        color = new Color(pixels[offset], pixels[offset + 1], pixels[offset + 2]);
+        if (color.isBlack()) {
+          continue;
+        }
+        registered = false;
+        for (const c of clusters) {
+          if (color.isSimilar(c.color, similarRange)) {
+            c.count++;
+            registered = true;
+          }
+        }
+
+        if (!registered) {
+          clusters.push({ color, count: 1 });
+        }
+      }
+
+      if (clusters.length === 0) {
+        colors.push(new Color(0, 0, 0));
+      }
+      else {
+        colors.push(clusters.sort((a, b) => b.count - a.count)[0].color);
+      }
+    }
+  }
+
+  return colors;
+}

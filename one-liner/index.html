@@ -1,0 +1,60 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="../styles/fonts/fonts.css">
+    <link rel="stylesheet" href="../styles/layout.css">
+  </head>
+  <body>
+    <style>
+      .card-wrapper {
+        border: 1px solid black;
+        width: fit-content;
+        margin: 0 auto;
+      }
+      .card {
+        background: #175382;
+
+        font-family: NanumMyeongjo;
+        color: #fff;
+        font-size: 19px;
+        line-height: 39px;
+        letter-spacing: 2px;
+      }
+      .card > span {
+        position: relative;
+        top: -3px;
+      }
+      .card > span:not(#fancy) {
+        width: 520px;
+        -webkit-font-smoothing: antialiased;
+        text-shadow: 0px 0px 1px black;
+
+        border-left: 3px solid white;
+        padding-left: 26px;
+      }
+
+      [back] {
+        background: #00354d;
+        padding: 2px;
+        border-radius: 2px;
+      }
+
+      #fancy {
+        height: 0px;
+        position: relative;
+        top: -70px;
+        display: none;
+      }
+    </style>
+    <div class="card-wrapper">
+      <div class="card">
+        <span id="fancy">ㅡ</span>
+        <span>주님은 남의 <span back>눈</span>으로 인간 활동을 감시한다.</span>
+        <span>주님의 길을 따라 <span back>정렬</span>사람에게 좋은 <span back>결과</span>를 준비한다.</span>
+        <span>기다려야만 하죠.</span>
+
+      </div>
+    </div>
+  </body>
+</html>

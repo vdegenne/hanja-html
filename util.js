@@ -40,7 +40,7 @@ export const decorateHTML = (html, korean = true, chinese = true, definitions = 
     html = html.replace(/=\"([^"]+)\"|(\"[^"]+\")/g, (match, group, a) => {
       if (group) return match;
       // if (group)
-      return `<span class="definition"> ${match.slice(1, -1)} </span>`
+      return `<span class="definition">${match.slice(1, -1)}</span>`
     });
   }
 
