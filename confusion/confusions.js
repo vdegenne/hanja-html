@@ -143,7 +143,7 @@ export const confusion6 = {
       all: ['期/七/漆/凄/戚/欺/妻']
     },
     details: {
-      all: 'The pronunication is similar to <b>/tʃi/</b> like "chea" in "cheap".'
+      all: 'The pronunciation is similar to <b>/tʃi/</b> like "chea" in "cheap".'
     }
   }
 }

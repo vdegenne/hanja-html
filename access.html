@@ -1,0 +1,156 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="./styles/fonts/fonts.css">
+  </head>
+
+  <body>
+    <style>
+      body {
+        padding: 20px;
+        width: 500px;
+        margin: 0 auto;
+      }
+      #input {
+        padding: 10px;
+        min-width: 100%;
+        box-sizing: border-box;
+        margin-bottom: 20px;
+      }
+      .language {
+        margin: 0 0 8px;
+      }
+      .language > span {
+        vertical-align: middle;
+      }
+      .language > span:not(.flag) {
+        text-decoration: underline;
+        cursor: pointer;
+        padding: 0 10px;
+      }
+
+      .naver {
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        width: 30px;
+        height: 30px;
+        background: #00c73c;
+        color: #fff;
+        box-sizing: border-box;
+        text-decoration: none !important;
+      }
+
+      #searches {
+        margin-top: 20px;
+      }
+      #searches > span {
+        cursor: pointer;
+        height: 22px;
+        padding: 0px 5px;
+        padding-top: 2px;
+        border-radius: 2px;
+        margin: 3px 8px 3px 3px;
+        background: #303030;
+        color: #fff;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <input id="input" type="text">
+    <div class="language">
+      <span class="flag">🇯🇵</span>
+      <span onclick="goJisho()">jisho</span>
+      <span onclick="goJapaneseNaver()" class="naver">N</span>
+    </div>
+    <div class="language">
+      <span class=flag>🇨🇳</span>
+      <span onclick="goWrittenChinese()">writtenchinese</span>
+      <span onclick="goChineseNaver()" class="naver">N</span>
+      <span onclick="goChineseHangulHanja()">hangulhanja</span>
+    </div>
+    <div class="language">
+      <span class="flag"></span>
+      <span onclick="goHangulHanja()">hangulhanja</span>
+      <span onclick="goNaver()" class="naver">N</span>
+    </div>
+
+    <div id="searches"></div>
+    
+    <script>
+      let searches = [];
+
+      jisho = (search) => `https://jisho.org/search/${search}`;
+      writtenChinese = (search) => `https://dictionary.writtenchinese.com/#sk=${search}&svt=pinyin`;
+      naver = (search) => `https://dict.naver.com/search.nhn?query=${search}`;
+      japaneseNaver = (search) => `https://ja.dict.naver.com/search.nhn?range=all&q=${search}`;
+      chineseNaver = (search) => `https://zh.dict.naver.com/#/search?query=${search}`;
+      hangulHanja = (search) => `http://www.hangulhanja.com/search?q=${search}`;
+      chineseHangulHanja = (search) => `http://www.hangulhanja.com/hanja/${search}`;
+
+      getSearch = () => document.getElementById('input').value;
+
+      _open = (urlFct) => {
+        let search = getSearch();
+        if (!search) { 
+          search = 'test'
+        }
+
+        open(urlFct(search));
+
+        if (search !== 'test' && searches.indexOf(search) === -1) {
+          addSearch(search);
+        }
+      }
+
+      addSearch = (search) => {
+        searches.push(search);
+        localStorage.setItem('searches', JSON.stringify(searches));
+        updateSearchesView();
+      }
+      removeSearch = (search) => {
+        searches.splice(searches.indexOf(search), 1);
+        localStorage.setItem('searches', JSON.stringify(searches));
+        updateSearchesView();
+      }
+
+      updateSearchesView = () => {
+        const searchesEl = document.getElementById('searches');
+        searchesEl.innerHTML = '';
+
+        searches = JSON.parse(localStorage.getItem('searches'));
+
+        searches.forEach(s => {
+          const span = document.createElement('span');
+          span.style.position = 'relative';
+          span.addEventListener('click', () => {
+            document.getElementById('input').value = s;
+          });
+          const deleter = document.createElement('span');
+          deleter.innerText = '🗙';
+          deleter.style = 'position:absolute;top:-10px;right:-8px;color:grey;font-size:8px;cursor:pointer;';
+          deleter.addEventListener('click', (e) => {
+            e.stopPropagation();
+            removeSearch(s);
+          });
+          span.appendChild(deleter);
+
+          span.append(s);
+          searchesEl.appendChild(span);
+        });
+      }
+
+      goJisho = _ => _open(jisho);
+      goWrittenChinese = _ => _open(writtenChinese);
+      goNaver = _ => _open(naver);
+      goJapaneseNaver = _ => _open(japaneseNaver);
+      goChineseNaver = _ => _open(chineseNaver);
+      goChineseHangulHanja = _ => _open(chineseHangulHanja);
+      goHangulHanja = _ => _open(hangulHanja);
+
+      updateSearchesView();
+    </script>
+  </body>
+</html>

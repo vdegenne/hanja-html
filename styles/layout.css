@@ -37,3 +37,7 @@
 
   /* box-shadow: 0 0px 7px -1px; */
 }
+.card.dark header {
+  background: #424242;
+  color: #bdbdbd;
+}

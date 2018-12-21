@@ -13,13 +13,28 @@
         margin: 0 auto;
       }
       .card {
-        background: #175382;
+        position: relative;
+/*         background: #283c4b;
+        background: white; */
+        color: #2a2a2a;
 
         font-family: NanumMyeongjo;
-        color: #fff;
-        font-size: 19px;
-        line-height: 39px;
+        /* color: #fff; */
+        font-size: 36px;
+        line-height: 70px;
         letter-spacing: 2px;
+      }
+      .card:after {
+        content:'';
+        background: url(https://www.fiftyflowers.com/site_files/FiftyFlowers/Image/Product/peony-sarah-bernhardt-bloom-500_73ae8c3c.jpg);
+        background: url(https://storage.googleapis.com/imp-projects/flower-show/1.2.3/images/splash/frontflower_right.png) no-repeat;
+        width: 500px;
+        height: 500px;
+        position: absolute;
+        bottom:0;
+        right:0;
+        z-index: -1;
+        opacity: .2;
       }
       .card > span {
         position: relative;
@@ -28,10 +43,7 @@
       .card > span:not(#fancy) {
         width: 520px;
         -webkit-font-smoothing: antialiased;
-        text-shadow: 0px 0px 1px black;
-
-        border-left: 3px solid white;
-        padding-left: 26px;
+        /* text-shadow: 0px 0px 8px rgba(255, 255, 255, 0.100); */
       }
 
       [back] {
@@ -50,10 +62,9 @@
     <div class="card-wrapper">
       <div class="card">
         <span id="fancy">ㅡ</span>
-        <span>주님은 남의 <span back>눈</span>으로 인간 활동을 감시한다.</span>
-        <span>주님의 길을 따라 <span back>정렬</span>사람에게 좋은 <span back>결과</span>를 준비한다.</span>
-        <span>기다려야만 하죠.</span>
-
+        <span>잠시 후 꿈이 깨여서,</span>
+        <span>순식간에 나는<br>당신의 눈에 빠져들었다는 걸 깨달랐네.</span>
+        <span>꿈과 마찬가지인 너의 예쁨.</span>
       </div>
     </div>
   </body>

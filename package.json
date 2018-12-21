@@ -6,5 +6,8 @@
   },
   "devDependencies": {
     "clang-format": "^1.2.4"
+  },
+  "scripts": {
+    "screenshots": "node ./screenshots/build-screenshots-json.js"
   }
 }

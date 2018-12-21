@@ -53,14 +53,30 @@ export const translation6 = {
   'jp': '私/わたし [watashi]'
 }
 
+export const translation7 = {
+  'en': 'Hello',
+  'fr': 'Bonjour [봉주르]',
+  'kr': '안녕하세요',
+  'cn': '你好 [nǐ hǎo]',
+  'jp': 'こんにちは [konnichiha]'
+}
+
+export const translation8 = {
+  'en': 'to learn/to study',
+  'fr': 'apprendre [아프항드]',
+  'kr': '공부하다/배우다 [Gongbuhada/Baeuda]',
+  'cn': '學習/学习 [xué xí]',
+  'jp': '学ぶ/まなぶ [manabu]'
+}
+
 export const createTranslationCard = (translation = getLastTranslation()) => {
 
   const index = getIndex(translation);
   translation = eval(translation);
 
   const img = new Image;
-  img.src = 'https://www.pagetgorman.org/platforms/PGSS/Images/Dictionary/m/me.gif';
-  img.width = 120;
+  img.src = 'http://tc.sinaimg.cn/maxwidth.800/tc.service.weibo.com/mmbiz_qpic_cn/c3635f2a97e92ca1057d050c1aa0b362.jpg';
+  img.width = 340;
   img.style.position = 'absolute';
   const changeImgPosition = (x, y) => {
     img.style.left = `${x - img.width / 2}px`;
@@ -70,13 +86,13 @@ export const createTranslationCard = (translation = getLastTranslation()) => {
   return html`
   <style>
     html {
-      --translation-font-size: 30px;
-      --translation-margin: 8px 0 0 300px;
+      --translation-font-size: 40px;
+      --translation-margin: 8px 0 0 20px;
     }
     .card { border-color: #d4d4d4 }
 
     .translation {
-      width: 530px;
+      width: 630px;
       font-size: var(--translation-font-size);
 
       display: flex;
@@ -127,7 +143,7 @@ export const createTranslationCard = (translation = getLastTranslation()) => {
   <div class="card border" @click="${(e) => changeImgPosition(e.layerX, e.layerY)}">
     <header><span>translations #${index}</span></header>
     
-    <div style="height:0px"></div>
+    <div style="height:220px"></div>
 
     ${Object.keys(translation).map(lang => html`
       <div class="translation ${classMap({ korean: lang === 'kr', chinese: lang === 'cn' || lang === 'jp' })}">

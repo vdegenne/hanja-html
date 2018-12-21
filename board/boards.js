@@ -1018,6 +1018,16 @@ export const board13 = [
   }
 ];
 
+// 貴j
+export const board14 = [
+  {
+    hj: "貴",
+    pinyins: ["guì"],
+    hg: ["귀"],
+    type: "j",
+    meanings: ["expensive", "precious", "noble"]
+  }
+];
 
 let colorsForFunBoard;
 window.getColorsForFunBoard = () => colorsForFunBoard;
@@ -1064,13 +1074,13 @@ export const createBoard = (board) => {
   return html`
   <style>
     html {
-      --hanja-size: 180px;
+      --hanja-size: 300px;
       --pinyin-size: 24px;
 
       --meaning-size: 40px;
       --long-meaning-size: calc(var(--meaning-size) - 10px);
 
-      --hangul-size: 160px;
+      --hangul-size: 200px;
 
       --dot-size: 15px;
 
@@ -1082,16 +1092,18 @@ export const createBoard = (board) => {
       flex-wrap: wrap;
       flex-direction: row;
       
-      padding: 30px 0 0;
+      padding: 30px 20px 20px;
       box-sizing: border-box;
 
       /* background: black; */
       color: #263238;
     }
     .card > header {
-      background: #f5f5f5;
       box-shadow: none;
       padding-right: 4px;
+    }
+    .card.dark {
+      color: #e8e8e8;
     }
 
     .case {
@@ -1137,7 +1149,7 @@ export const createBoard = (board) => {
       align-items: center;
       width: var(--hanja-size);
       position: relative;
-      top: calc(var(--case-top-offset) + 10px) !important;
+      top: calc(var(--case-top-offset) + 20px) !important;
     }
     .colors {
       display: flex;
@@ -1176,7 +1188,10 @@ export const createBoard = (board) => {
     .v { background: #f7dd00 }
     .j { background: green }
     .n { background: #454545 }
-
+    .card.dark .a { background: #ff9800 }
+    .card.dark .v { background: #ffeb3b }
+    .card.dark .j { background: #43a047 }
+    .card.dark .n { background: black }
 
     /* HANGULS */
     .hangul {
@@ -1241,7 +1256,7 @@ export const createBoard = (board) => {
     }
   </style>
   
-  <div class="card" @click="${function () { switchContent(this) }}" hanjas>
+  <div class="card dark" @click="${function () { switchContent(this) }}" hanjas>
     <header>
       <span style="${styleMap({visibility: index ? 'visible' : 'hidden'})}">board #${index}</span>
       <div class="legend">
