@@ -1029,6 +1029,99 @@ export const board14 = [
   }
 ];
 
+// 種n用v於a建v立va網n頁n標n準n
+export const board15 = [
+  {
+    hj: "種",
+    pinyins: ["zhǒng", "zhòng"],
+    hg: ["종"],
+    type: "n",
+    meanings: [
+      "seed",
+      "kind",
+      "type",
+      "species",
+      "to plant",
+      "to grow",
+      "to cultivate"
+    ]
+  },
+  {
+    hj: "用",
+    pinyins: ["yòng"],
+    hg: ["용"],
+    type: "v",
+    meanings: ["to use", "to employ"]
+  },
+  {
+    hj: "於",
+    pinyins: ["yú"],
+    hg: ["오", "어"],
+    type: "a",
+    meanings: ["at", "in", "from"]
+  },
+  {
+    hj: "建",
+    pinyins: ["jiàn"],
+    hg: ["건"],
+    type: "v",
+    meanings: [
+      "to establish",
+      "to build",
+      "to set up",
+      "to construct",
+      "to found"
+    ]
+  },
+  {
+    hj: "立",
+    pinyins: ["lì"],
+    hg: ["입", "립"],
+    type: "va",
+    meanings: [
+      "to stand",
+      "to set up",
+      "to establish",
+      "to lay down",
+      "at once",
+      "immediately"
+    ]
+  },
+  {
+    hj: "網",
+    pinyins: ["wǎng"],
+    hg: ["망"],
+    type: "n",
+    meanings: ["net", "network"]
+  },
+  {
+    hj: "頁",
+    pinyins: ["yè"],
+    hg: ["혈", "엽"],
+    type: "n",
+    meanings: ["page", "leaf"]
+  },
+  {
+    hj: "標",
+    pinyins: ["biāo"],
+    hg: ["표"],
+    type: "n",
+    meanings: [
+      "the topmost branches of a tree",
+      "indication",
+      "sign",
+      "mark"
+    ]
+  },
+  {
+    hj: "準",
+    pinyins: ["zhǔn"],
+    hg: ["준", "절"],
+    type: "n",
+    meanings: ["standard"]
+  }
+];
+
 let colorsForFunBoard;
 window.getColorsForFunBoard = () => colorsForFunBoard;
 export const createFunBoard = async (imgUrl) => {
@@ -1074,25 +1167,25 @@ export const createBoard = (board) => {
   return html`
   <style>
     html {
-      --hanja-size: 300px;
-      --pinyin-size: 24px;
+      --hanja-size: 120px;
+      --pinyin-size: 16px;
 
-      --meaning-size: 40px;
-      --long-meaning-size: calc(var(--meaning-size) - 10px);
+      --meaning-size: 20px;
+      --long-meaning-size: calc(var(--meaning-size) - 6px);
 
-      --hangul-size: 200px;
+      --hangul-size: 80px;
 
-      --dot-size: 15px;
+      --dot-size: 12px;
 
-      --case-top-offset: -9px;
-      --case-left-offset: -8px;
+      --case-top-offset: 5px;
+      --case-left-offset: -6px;
     }
 
     .card {
       flex-wrap: wrap;
       flex-direction: row;
       
-      padding: 30px 20px 20px;
+      padding: 30px 30px 30px;
       box-sizing: border-box;
 
       /* background: black; */
@@ -1149,7 +1242,7 @@ export const createBoard = (board) => {
       align-items: center;
       width: var(--hanja-size);
       position: relative;
-      top: calc(var(--case-top-offset) + 20px) !important;
+      top: calc(var(--case-top-offset) + 8px) !important;
     }
     .colors {
       display: flex;
@@ -1256,7 +1349,7 @@ export const createBoard = (board) => {
     }
   </style>
   
-  <div class="card dark" @click="${function () { switchContent(this) }}" hanjas>
+  <div class="card" @click="${function () { switchContent(this) }}" hanjas>
     <header>
       <span style="${styleMap({visibility: index ? 'visible' : 'hidden'})}">board #${index}</span>
       <div class="legend">
@@ -1273,7 +1366,7 @@ export const createBoard = (board) => {
         ${b.hg.map(hg => html`<span class="sep-dot">•</span><span>${hg}</span>`)}
       </div>
 
-      <div class="meanings" ?long="${b.meanings.findIndex(m => formatMeaning(m).length > 24) > -1}">
+      <div class="meanings" ?long="${longMeaning(b.meanings)}">
         ${b.meanings.map(m => m[0] !== '!' ? html`<span>${formatMeaning(m)}</span>` : null)}
       </div>
 
@@ -1289,6 +1382,7 @@ export const createBoard = (board) => {
   `;
 }
 
+const longMeaning = (meanings) => (meanings.length > 6) || meanings.findIndex(m => formatMeaning(m).length > 28) > -1;
 const formatMeaning = (meaning) => meaning.replace(/\(.*\)/g, '').trim();
 
 

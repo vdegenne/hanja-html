@@ -114,15 +114,24 @@
           _playPinyin();
         }
       });
+      window.addEventListener('keypress', (e) => {
+        // console.log(e.keyCode);
+        if (e.keyCode === 115) {
+          _playPinyin();
+        }
+      });
 
-      const _playPinyin = () => playPinyin(hanja.pinyins[0]);
+      const _playPinyin = async () => await playPinyin(hanja.pinyins[0]);
       const navigateToHanja = () => window.open(`http://www.hangulhanja.com/hanja/${hanja.hj}`, '_blank');
 
       const pickRandom = () => {
         if (knownHanjas.size + failed.size < hanjasCount) {
           do {
             hanja = getRandom();
+            // console.log(hanja.hj, knownHanjas.has(hanja), failed.has(hanja));
           } while (knownHanjas.has(hanja) || failed.has(hanja));
+          // console.log(knownHanjas);
+          // console.log(failed);
         } else {
           if (failed.size < 1) {
             console.warn('end');
@@ -219,7 +228,7 @@
       // when the page starts
       (() => {
         loadData();
-        updateViewWithRandom();
+        setTimeout(updateViewWithRandom, 1);
       })();
     </script>
   </body>

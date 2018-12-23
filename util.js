@@ -112,9 +112,14 @@ export const getPinyinNumericSyntax = (pinyin) => {
 }
 
 
-export const playPinyin = (pinyin) => {
-  const audio = new Audio(`https://dictionary.writtenchinese.com/sounds/${getPinyinNumericSyntax(pinyin)}.mp3`);
-  setTimeout(() => audio.play(), 1000);
+export const playPinyin = async (pinyin) => {
+  const url = `https://dictionary.writtenchinese.com/sounds/${getPinyinNumericSyntax(pinyin)}.mp3`;
+  const audio = new Audio();
+  await new Promise(resolve => {
+    audio.addEventListener('loadeddata', resolve);
+    audio.src = url;
+  });
+  audio.play();
 }
 
 
