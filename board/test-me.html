@@ -92,6 +92,7 @@
 
       #canvas-wrapper {
         position: relative;
+        touch-action: none;
       }
       #canvas-wrapper > span {
         position: absolute;
@@ -294,12 +295,17 @@
         setTimeout(updateViewWithRandom, 1);
 
         let lastX, lastY;
-        canvas.addEventListener('mousemove', e => {
-          if (e.buttons && lastX) {
-            drawLine(lastX, lastY, e.offsetX, e.offsetY);
+//	let onclick = false;
+//	window.onclick = onclick;
+//	canvas.addEventListener('touchstart', () => onclick = true);
+//	canvas.addEventListener('touchend', () => onclick = false);
+        canvas.addEventListener('touchmove', e => {
+	console.log(e);
+          if (lastX) {
+            drawLine(lastX, lastY, e.touches[0].clientX, e.touches[0].clientY);
           }
-          lastX = e.offsetX;
-          lastY = e.offsetY;
+          lastX = e.touches[0].clientX;
+          lastY = e.touches[0].clientY;
         });
       })();
     </script>
