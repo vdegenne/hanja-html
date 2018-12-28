@@ -119,8 +119,8 @@
     <!-- HTML -->
     <div id="content"></div>
     <div id="canvas-wrapper">
-      <span>draw in this area</span>
-      <canvas id="canvas" height="400"></canvas>
+      <!-- <span>draw in this area</span> -->
+      <canvas id="canvas" height="200"></canvas>
       <button onclick="context.clearRect(0, 0, canvas.width, canvas.height)">clear</button>
     </div>
     <div class="buttons">
@@ -300,12 +300,15 @@
 //	canvas.addEventListener('touchstart', () => onclick = true);
 //	canvas.addEventListener('touchend', () => onclick = false);
         canvas.addEventListener('touchmove', e => {
-	console.log(e);
+          const x = e.touches[0].clientX;
+          const y = e.touches[0].clientY - window['canvas-wrapper'].offsetTop;
+
           if (lastX) {
-            drawLine(lastX, lastY, e.touches[0].clientX, e.touches[0].clientY);
+            drawLine(lastX, lastY, x, y);
           }
-          lastX = e.touches[0].clientX;
-          lastY = e.touches[0].clientY;
+
+          lastX = x;
+          lastY = y;
         });
       })();
     </script>
