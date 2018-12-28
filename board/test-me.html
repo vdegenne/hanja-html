@@ -4,6 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1,user-scalable=yes">
     <link rel="stylesheet" href="../styles/fonts/fonts.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   </head>
   <body>
     <style>
@@ -114,13 +115,23 @@
         display: block;
         background: grey;
       }
+
+      #timer-frame {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+      }
+      #timer-frame > * {
+        vertical-align: middle;
+        margin-right: 4px;
+      }
     </style>
 
     <!-- HTML -->
     <div id="content"></div>
     <div id="canvas-wrapper">
       <!-- <span>draw in this area</span> -->
-      <canvas id="canvas" height="200"></canvas>
+      <canvas id="canvas" height="300"></canvas>
       <button onclick="context.clearRect(0, 0, canvas.width, canvas.height)">clear</button>
     </div>
     <div class="buttons">
@@ -143,11 +154,19 @@
       let hanjas = getHanjas();
       let hanjasCount = hanjas.length;
       
+      const timeForThinking = 60 * 15;
+      const timeForAnswer = 60 * 2;
+      let timerTimeout, timer;
+
 
       content.addEventListener('click', () => {
         if (!content.hasAttribute('answer')) {
           content.toggleAttribute('answer');
           _playPinyin();
+
+          if (timerTimeout) {
+            countDown(timeForAnswer);
+          }
         }
       });
       window.addEventListener('keypress', (e) => {
@@ -180,6 +199,44 @@
         }
       };
 
+
+      /* timer function */
+      const countDown = (time) => {
+        /* clear timeout first */
+        timerTimeout && clearTimeout(timerTimeout);
+
+        /* set timeout */
+        timerTimeout = setTimeout(() => {
+          if (!--time) {
+            content.hasAttribute('answer') ? updateViewWithRandom() : content.click();
+          }
+          else countDown(time);
+        }, 1000);
+
+        /* update the view */
+        timer = time; 
+        renderView();
+      }
+
+      const stopTimer = _ => {
+        clearTimeout(timerTimeout);
+        timerTimeout = undefined;
+        renderView();
+      }
+
+      const onTimerClick = e => {
+        e.stopPropagation();
+
+        /* conditions */
+        if (timerTimeout) {
+          stopTimer();
+        }
+        else {
+          content.hasAttribute('answer') && updateViewWithRandom();
+          countDown(timeForThinking);
+        }
+      }
+
       const renderView = () => render(html`
         ${hanja ? html`
           <div class="answer">
@@ -189,6 +246,11 @@
           </div>
           ${hanja.meanings.map(m => html`<div class=meaning>${m}</div>`)}
         ` : 'finished'}
+        
+        <div id="timer-frame" @click="${onTimerClick}">
+          <span class="material-icons">timer</span>
+          ${timerTimeout ? html`<span>${timer}</span>` : null}
+        </div>
 
         <div id="stats">
           <span>total : ${knownHanjas.size + failed.size}/${hanjasCount}</span>
@@ -204,6 +266,10 @@
         renderView();
         _playPinyin();
         content.removeAttribute('answer');
+
+        if (timerTimeout) {
+          countDown(timeForThinking);
+        }
       }
 
 
@@ -295,25 +361,33 @@
         setTimeout(updateViewWithRandom, 1);
 
         let lastX, lastY;
-        canvas.addEventListener('touchmove', e => {
-          const x = e.touches[0].clientX;
-          const y = e.touches[0].clientY - window['canvas-wrapper'].offsetTop;
+        const onclick = e => {
+          let x, y;
+          if (e.touches) {
+            x = e.touches[0].clientX;
+            y = e.touches[0].clientY - window['canvas-wrapper'].offsetTop;
+          }
+          else {
+            x = e.offsetX;
+            y = e.offsetY;
+          }
 
           if (!lastX) {
             lastX = x;
             lastY = y;
           }
 
-          if (lastX) {
+          if (lastX && (e.touches || e.buttons)) {
             drawLine(lastX, lastY, x, y);
           }
 
           lastX = x;
           lastY = y;
-        });
-        canvas.addEventListener('touchend', _ => {
-          lastX = undefined; lastY = undefined
-        });
+        };
+        const onleave = _ => { lastX = undefined; lastY = undefined }
+        canvas.addEventListener('touchmove', onclick);
+        canvas.addEventListener('mousemove', onclick);
+        canvas.addEventListener('touchend', onleave);
       })();
     </script>
   </body>
