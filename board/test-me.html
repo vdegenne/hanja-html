@@ -295,13 +295,14 @@
         setTimeout(updateViewWithRandom, 1);
 
         let lastX, lastY;
-//	let onclick = false;
-//	window.onclick = onclick;
-//	canvas.addEventListener('touchstart', () => onclick = true);
-//	canvas.addEventListener('touchend', () => onclick = false);
         canvas.addEventListener('touchmove', e => {
           const x = e.touches[0].clientX;
           const y = e.touches[0].clientY - window['canvas-wrapper'].offsetTop;
+
+          if (!lastX) {
+            lastX = x;
+            lastY = y;
+          }
 
           if (lastX) {
             drawLine(lastX, lastY, x, y);
@@ -309,6 +310,9 @@
 
           lastX = x;
           lastY = y;
+        });
+        canvas.addEventListener('touchend', _ => {
+          lastX = undefined; lastY = undefined
         });
       })();
     </script>
