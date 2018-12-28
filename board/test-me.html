@@ -89,19 +89,53 @@
         align-items: flex-end;
         font-size: 10px;
       }
+
+      #canvas-wrapper {
+        position: relative;
+      }
+      #canvas-wrapper > span {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 6px;
+        color: #585858;
+      }
+      #canvas-wrapper > button {
+        position: absolute;
+        top: 0;
+        right:0;
+        border: 0;
+        padding: 10px 16px;
+        cursor: pointer;
+        outline: none;
+      }
+      #canvas {
+        display: block;
+        background: grey;
+      }
     </style>
+
+    <!-- HTML -->
     <div id="content"></div>
+    <div id="canvas-wrapper">
+      <span>draw in this area</span>
+      <canvas id="canvas" height="400"></canvas>
+      <button onclick="context.clearRect(0, 0, canvas.width, canvas.height)">clear</button>
+    </div>
     <div class="buttons">
         <div id="yes" onclick="yes()">yes</div>
         <div id="no" onclick="no()">no</div>
     </div>
 
+
+    <!-- SCRIPT -->
     <script type="module">
       import { getRandom, getHanjasCount, getHanjas } from './boards.js';
       import { render, html } from '../node_modules/lit-html/lit-html.js';
       import { randomRange, playPinyin } from '../util.js';
 
-      const content = document.getElementById('content');
+      const context = canvas.getContext('2d');
+      window.context = context;
       let hanja;
       let knownHanjas  = new Set;
       let failed = new Set;
@@ -226,10 +260,47 @@
         characters.forEach(c => failed.add(hanjas.filter(h => c === h.hj)[0]));
       }
 
-      // when the page starts
+      const drawCircle = (x, y, radius = 2) => {
+        context.beginPath();
+        context.arc(x, y, radius, 0, 2 * Math.PI);
+        context.stroke();
+      }
+
+      const drawLine = (x1, y1, x2, y2, width = 8) => {
+        context.lineWidth = width;
+        context.strokeStyle = '#ffffff';
+        context.fillStyle = '#ffffff';
+
+        context.beginPath();
+        context.moveTo(x1, y1);
+        context.lineTo(x2, y2);
+        context.stroke();
+
+        context.arc(x1, y1, width/2, 0, 2 * Math.PI);
+        context.arc(x2, y2, width/2, 0, 2 * Math.PI);
+
+        context.fill();
+      }
+
+      /* resizing the canvas */
+      const resizeCanvas = () => canvas.width = window.innerWidth;
+      window.addEventListener('resize', resizeCanvas);
+      resizeCanvas();
+      
+
+      /* when the page starts */
       (() => {
         loadData();
         setTimeout(updateViewWithRandom, 1);
+
+        let lastX, lastY;
+        canvas.addEventListener('mousemove', e => {
+          if (e.buttons && lastX) {
+            drawLine(lastX, lastY, e.offsetX, e.offsetY);
+          }
+          lastX = e.offsetX;
+          lastY = e.offsetY;
+        });
       })();
     </script>
   </body>
