@@ -121,7 +121,7 @@
         const searchesEl = document.getElementById('searches');
         searchesEl.innerHTML = '';
 
-        searches = JSON.parse(localStorage.getItem('searches'));
+        searches = localStorage.getItem('searches') ? JSON.parse(localStorage.getItem('searches')) : [];
 
         searches.forEach(s => {
           const span = document.createElement('span');

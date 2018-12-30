@@ -154,8 +154,8 @@
       let hanjas = getHanjas();
       let hanjasCount = hanjas.length;
       
-      const timeForThinking = 60 * 15;
-      const timeForAnswer = 60 * 2;
+      const timeForThinking = 60 * 10; // 60 * 2;
+      const timeForAnswer = 60 * 5; // 60 * 1;
       let timerTimeout, timer;
 
 
@@ -166,6 +166,12 @@
 
           if (timerTimeout) {
             countDown(timeForAnswer);
+            new Notification(`${hanja.hj} (${hanja.pinyins})`, {
+              silent: true,
+              icon: `http://www.hangulhanja.com/api/images/hanmuns/${hanja.hj}.gif`,
+              body: hanja.meanings.join(' / '),
+              requireInteraction: true
+            });
           }
         }
       });
@@ -269,6 +275,7 @@
 
         if (timerTimeout) {
           countDown(timeForThinking);
+          new Notification(hanja.pinyins.join('/'), { silent: true });
         }
       }
 
@@ -388,6 +395,8 @@
         canvas.addEventListener('touchmove', onclick);
         canvas.addEventListener('mousemove', onclick);
         canvas.addEventListener('touchend', onleave);
+
+        Notification.requestPermission();
       })();
     </script>
   </body>
