@@ -17,6 +17,10 @@ export const personality1 = [
   {
     hj: '史',
     meanings: ['history', 'histoire', '역사', 'れきし']
+  },
+  {
+    hj: '使',
+    meanings: ['to use/to employ/to cause/to send', 'utiliser/employer/causer/envoyer', '부리다/하여금/보내다', '使う/つかう']
   }
 ];
 
@@ -71,7 +75,7 @@ export const createCard = (name = getLastPersonality()) => {
   <style>
     html {
       --inner-width: 540px;
-      --separator-height: 40px;
+      --separator-height: 20px;
 
       --hanja-font-size: 106px;
       --meaning-font-size: 18px;

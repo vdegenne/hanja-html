@@ -14,6 +14,12 @@ export const ambiguous1 = {
   en: html`hehe`
 }
 
+export const fact1 = {
+  langs: ['en'],
+  en: html`
+  <p>Asiatic languages use at least two meanings (from the Chinese etymology) to produce nouns.</p>
+  `
+}
 
 export const createCard = (general) => {
 
