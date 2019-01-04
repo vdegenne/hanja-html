@@ -48,6 +48,7 @@ export const personality3 = [
   }
 ];
 
+
 export const personality4 = [
   {
     hj: '書',
@@ -66,6 +67,29 @@ export const personality4 = [
   }
 ];
 
+export const personality5 = [
+  {
+    hj: '老',
+    pinyin: 'lǎo',
+    meanings: ['[lǎo]/old']
+  },
+  {
+    hj: '都',
+    pinyin: 'dū/dōu',
+    meanings: ['[dū]/capital city', '[dōu]/all/entirely']
+  },
+  {
+    hj: '著',
+    pinyin: 'zhù/zháo/zhuó/zhe',
+    meanings: ['[zhù]/to write', '[zháo]/to come in contact with', '[zhuó]/to wear/to use/to apply', '[zhe]/-ing']
+  },
+  {
+    hj: '者',
+    pinyin: 'zhě',
+    meanings: ['[zhě]/-er/-ist']
+  }
+]
+
 export const createCard = (name = getLastPersonality()) => {
 
   const index = getIndex(name);
@@ -74,11 +98,12 @@ export const createCard = (name = getLastPersonality()) => {
   return html`
   <style>
     html {
-      --inner-width: 540px;
-      --separator-height: 20px;
+      --inner-width: 500px;
 
-      --hanja-font-size: 106px;
+      --hanja-font-size: 91px;
       --meaning-font-size: 18px;
+
+      --separator-height: 11px;
     }
     .element {
       display: flex;
@@ -104,6 +129,9 @@ export const createCard = (name = getLastPersonality()) => {
 
     .character {
       font-size: var(--hanja-font-size);
+      color: #424242;
+      font-family: KaiTi;
+      text-shadow: 0 1px 0px black;
     }
     .meanings {
       display: flex;

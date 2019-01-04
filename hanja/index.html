@@ -1,0 +1,90 @@
+<!doctype>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+  </head>
+  <body>
+    <style>
+      body {
+        background: black;
+      }
+      #content-wrapper {
+        width: fit-content;
+        margin: 0 auto;
+        border: 1px solid black;
+      }
+      #content {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 640px;
+        height: 640px;
+
+        background: white;
+
+        position: relative;
+        overflow: hidden;
+      }
+      .hanja {
+        display: flex;
+        align-items: center;
+        position: relative;
+        top: -17px;
+
+        font-size: 300px;
+        height: 100px;
+
+        font-family: "UD Digi Kyokasho NK-R";
+        font-weight: 100;
+        color: #191919;
+      }
+
+      .layer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        top: 0; right: 0; bottom: 0; left: 0;
+      }
+    </style>
+    <div id=content-wrapper>
+      <div id=content></div>
+    </div>
+
+    <script type="module">
+      import { render, html } from '/node_modules/lit-html/lit-html.js';
+      
+      const hanja = '獵';
+
+      render(html`
+      <style>
+        #back {
+          background: url(https://foundtheworld.com/wp-content/uploads/2015/12/Amazon-Rainforest-1.jpg) 50% 50%;
+          background-size: 100% 100%;
+        }
+        #black {
+          background: black;
+          opacity: .5;
+        }
+        #hanja > .hanja {
+          font-family: SimSun;
+          /* position: absolute; */
+          /* top: 150px;right: 50px; */
+          font-size: 160px;
+          color: white;
+          /* text-shadow: inset 0px 5px 8px #000000; */
+        }
+      </style>
+      
+      <div class=layer id=back></div>
+      <div class=layer id="black"></div>
+      <div class="layer" id="hanja">
+        <span class="hanja">${hanja}</span>
+      </div>
+      `, content);
+    </script>
+  </body>
+</html>
