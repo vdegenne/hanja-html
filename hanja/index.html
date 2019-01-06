@@ -28,13 +28,11 @@
         overflow: hidden;
       }
       .hanja {
-        display: flex;
-        align-items: center;
-        position: relative;
-        top: -17px;
+        /* display: flex;
+        align-items: center; */
 
         font-size: 300px;
-        height: 100px;
+        /* height: 100px; */
 
         font-family: "UD Digi Kyokasho NK-R";
         font-weight: 100;
@@ -57,23 +55,28 @@
     <script type="module">
       import { render, html } from '/node_modules/lit-html/lit-html.js';
       
-      const hanja = '獵';
+      const hanja = '勇';
 
       render(html`
       <style>
         #back {
-          background: url(https://foundtheworld.com/wp-content/uploads/2015/12/Amazon-Rainforest-1.jpg) 50% 50%;
-          background-size: 100% 100%;
+          background: url(https://www.candb.com/site/candb/cache/artwork/1600/elite-knight-cover_dark-souls_1364x1600_marked.jpg) 58% 35%;
+          /* background-size: 100% 100%; */
         }
         #black {
           background: black;
-          opacity: .5;
+          opacity: .7;
+        }
+        #hanja {
+          position: absolute;
+          top: 50px;
+          right: 60px;
+          text-align: center;
+          color: #fff;
         }
         #hanja > .hanja {
           font-family: SimSun;
-          /* position: absolute; */
-          /* top: 150px;right: 50px; */
-          font-size: 160px;
+          font-size: 200px;
           color: white;
           /* text-shadow: inset 0px 5px 8px #000000; */
         }
@@ -81,8 +84,11 @@
       
       <div class=layer id=back></div>
       <div class=layer id="black"></div>
-      <div class="layer" id="hanja">
-        <span class="hanja">${hanja}</span>
+      <div class="layer">
+        <div id="hanja">
+          <span class="hanja">${hanja}</span><br>
+          <span style="font-size: 190%">brave</span>
+        </div>
       </div>
       `, content);
     </script>

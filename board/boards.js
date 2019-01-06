@@ -1,6 +1,5 @@
 import { html } from '../node_modules/lit-html/lit-html.js';
 import { styleMap } from '../node_modules/lit-html/directives/style-map.js';
-import { classMap } from '../node_modules/lit-html/directives/class-map.js';
 import { getIndex } from '../util.js';
 
 
@@ -1122,6 +1121,46 @@ export const board15 = [
   }
 ];
 
+// 軟j件n概j念nv
+export const board16 = [
+  {
+    hj: "軟",
+    pinyins: ["ruǎn"],
+    hg: ["연"],
+    type: "j",
+    meanings: ["soft", "flexible"]
+  },
+  {
+    hj: "件",
+    pinyins: ["jiàn"],
+    hg: ["건"],
+    type: "n",
+    meanings: [
+      "item",
+      "component",
+      "case",
+      "matter",
+      "classifier for events"
+    ]
+  },
+  {
+    hj: "概",
+    pinyins: ["gài"],
+    hg: ["개"],
+    type: "j",
+    meanings: ["general", "approximate"]
+  },
+  {
+    hj: "念",
+    pinyins: ["niàn"],
+    hg: ["념", "염"],
+    type: "nv",
+    meanings: ["a thinking", "remembrance", "idea", "to miss (sb)"]
+  }
+];
+
+
+
 let colorsForFunBoard;
 window.getColorsForFunBoard = () => colorsForFunBoard;
 export const createFunBoard = async (imgUrl) => {
@@ -1167,18 +1206,18 @@ export const createBoard = (board) => {
   return html`
   <style>
     html {
-      --hanja-size: 120px;
-      --pinyin-size: 16px;
+      --hanja-size: 180px;
+      --pinyin-size: 28px;
 
-      --meaning-size: 20px;
+      --meaning-size: 25px;
       --long-meaning-size: calc(var(--meaning-size) - 6px);
 
-      --hangul-size: 80px;
+      --hangul-size: 100px;
 
-      --dot-size: 12px;
+      --dot-size: 14px;
 
-      --case-top-offset: 5px;
-      --case-left-offset: -6px;
+      --case-top-offset: 0px;
+      --case-left-offset: 0px;
     }
 
     .card {
@@ -1189,7 +1228,7 @@ export const createBoard = (board) => {
       box-sizing: border-box;
 
       /* background: black; */
-      color: #263238;
+      color: #424242;
     }
     .card > header {
       box-shadow: none;
@@ -1301,7 +1340,7 @@ export const createBoard = (board) => {
     }
 
     .hangul2 {
-      font-size: 52px;
+      font-size: 62px;
     }
 
     .hangul3 {
