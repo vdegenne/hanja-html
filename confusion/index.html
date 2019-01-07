@@ -16,7 +16,7 @@
       <div id="content"></div>
     </div>
 
-    <p id="tags" style="width: 500px;margin:20px auto;">#language#languagecommunity#languagelovers#photo#교환학생#langues#中文#汉字#中文字#hsk#hsk4#중국어#chinois#chinese#你好#안녕#bonjour#프랑스</p>
+    <p id="tags" style="width: 500px;margin:20px auto;">#vocabulary#lovechinese#study#chinois#chinese#중국말#중국어#한문#한자#จีน#中国語#čínsky#Chinesisch#kineski#kinesisk#الصينية#chino#китайский#chineselanguage#learnchinese#studychinese#lovechina#漢字#中文#中國#中华#Cina#cinese#Čínsky</p>
 
     <script type="module">
       import { renderConfusionCard } from './confusions.js';
@@ -26,6 +26,7 @@
         document.getElementById('content')
       );
 
+      console.log(`${tags.innerText.split('#').length} tags`);
       // window.renderCard = (lang) => render(createConfusionCard(), content);
 
       // content.addEventListener('click', () => {

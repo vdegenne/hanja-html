@@ -149,6 +149,20 @@ export const confusion6 = {
 }
 
 
+export const confusion7 = {
+  langs: ['all'],
+  char1: {
+    name: '已',
+    pinyin: 'yǐ',
+    hangeul: '이'
+  },
+  char2: {
+    name: '己',
+    pinyin: 'jǐ',
+    hangeul: '기'
+  }
+}
+
 
 export const renderConfusionCard = (content, confusion = lastConfusionName(), lang) => {
 
@@ -173,6 +187,84 @@ export const renderConfusionCard = (content, confusion = lastConfusionName(), la
     korean: isKorean(meaning),
     chinese: isChinese(meaning) || isJapanese(meaning)
   });
+
+  render(html`
+  <style>
+    .card {
+      padding: 70px 20px;
+      box-sizing: border-box;
+      background: #ffffff;
+    }
+    .question {
+      font-size: 200%;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin: 0 0 60px 0;
+      /* color: orange; */
+    }
+    .content {
+      width: 100%;
+      display: flex;
+      font-size: 124%;
+      min-height: 223px;
+    }
+    .content > .side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .side > header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    header > .hanja {
+      font-size: 700%;
+      margin: 0 0 20px;
+    }
+    header > span:nth-of-type(2) {
+      font-weight: bold;
+      color: #f8635e;
+    }
+    .pinyin {
+      font-family: monospace;
+      font-size: 152%;
+      font-weight: 100;
+    }
+    .side.left {
+      border-right: 4px solid rgba(66, 66, 66, .05);
+    }
+
+    .signature {
+      position: absolute;
+      bottom: 5px;
+      right: 6px;
+      font-size: 70%;
+    }
+  </style>
+  <div class="card">
+    <div class="question">Do you know the difference ?</div>
+    <div class="content">
+      <div class="side left">
+        <header>
+          <span class="hanja chinese">${confusion.char1.name}</span>
+          <span class="korean">【 <span class="pinyin">${confusion.char1.pinyin}</span> / ${confusion.char1.hangeul} 】</span>
+        </header>
+      </div>
+      <div class="side right">
+        <header>
+          <span class="hanja chinese">${confusion.char2.name}</span>
+          <span class="korean">【 <span class="pinyin">${confusion.char2.pinyin}</span> / ${confusion.char2.hangeul} 】</span>
+        </header>
+      </div>
+      <div class="signature">@ballangddang</div>
+    </div>
+    <div class=""></div>
+  </div>
+  `, content);
+
+  return;
 
   render(html`
   <style>

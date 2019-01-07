@@ -27,11 +27,19 @@ export const personality1 = [
 export const personality2 = [
   {
     hj: '起',
-    meanings: ['to get up/to raise (sth)/to start', 'se lever/soulever/initier (une action)', '일어나다/시작하다', 'おきる']
+    meanings: ['qǐ', 'to get up/to raise (sth)/to start']
   },
   {
     hj: '趣',
-    meanings: ['interesting/amusing', 'intéressant/amusant/intérêt/goût', '뜻/취지/흥미/재미/취미/풍취', 'おもむき/しゅみ/たのしみ/ふうしゅ']
+    meanings: ['qù', 'interesting/amusing']
+  },
+  {
+    hj: '超',
+    meanings: ['chāo', 'to surpass/to cross', 'super-']
+  },
+  {
+    hj: '越',
+    meanings: ['yuè', 'to surpass/to exceed/to climb over']
   }
 ];
 
