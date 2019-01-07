@@ -238,9 +238,13 @@
           stopTimer();
         }
         else {
-          content.hasAttribute('answer') && updateViewWithRandom();
-          countDown(timeForThinking);
+          if (content.hasAttribute('answer')) {
+            updateViewWithRandom();
+          } else {
+            countDown(timeForThinking);
+          }
         }
+        new Notification(hanja.pinyins.join('/'), { silent: true });
       }
 
       const renderView = () => render(html`
