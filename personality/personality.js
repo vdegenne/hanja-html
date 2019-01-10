@@ -8,19 +8,23 @@ import { getIndex, isKorean, isJapanese } from '../util.js';
 export const personality1 = [
   {
     hj: '更',
-    meanings: ['to change/more', 'changer/davantage', '고치다/다시', 'あらためる']
+    meanings: ['[gēng]/to change/to replace', '[gèng]/more/even more/further', '경/갱']
+  },
+  {
+    hj: '硬',
+    meanings: ['[yìng]/hard/stiff/strong/firm/resolutly', '경']
   },
   {
     hj: '便',
-    meanings: ['convenient/easy', 'commode/facile', '편하다/쉬다', 'らく']
+    meanings: ['[biàn]/convenient/easy', '변/편']
   },
   {
     hj: '史',
-    meanings: ['history', 'histoire', '역사', 'れきし']
+    meanings: ['[shǐ]/history', '사']
   },
   {
     hj: '使',
-    meanings: ['to use/to employ/to cause/to send', 'utiliser/employer/causer/envoyer', '부리다/하여금/보내다', '使う/つかう']
+    meanings: ['[shǐ]/to use/to employ/to send', '사/시']
   }
 ];
 
@@ -55,7 +59,6 @@ export const personality3 = [
     meanings: ['teacher/master/model', 'professeur/maitre/modèle', '스승', 'し/ししょう/しはん/きょうし']
   }
 ];
-
 
 export const personality4 = [
   {
@@ -98,6 +101,41 @@ export const personality5 = [
   }
 ]
 
+export const personality6 = [
+  {
+    hj: '言',
+    meanings: ['yán/words/speech/to say/to talk']
+  },
+  {
+    hj: '語',
+    meanings: ['yǔ/language']
+  },
+  {
+    hj: '說',
+    meanings: ['shuō/to say/to explain', 'shuì/to persuade']
+  },
+  {
+    hj: '設',
+    meanings: ['shè/to establish/to found/to set']
+  },
+  {
+    hj: '計',
+    meanings: ['jì/to plan/to calculate']
+  }
+];
+
+export const personality7 = [
+  {
+    hj: '貫',
+    meanings: ['[guàn]', 'to pass through/to pierce throught']
+  },
+  {
+    hj: '貴',
+    meanings: ['[guì]', 'expensive/precious/noble']
+  }
+];
+
+
 export const createCard = (name = getLastPersonality()) => {
 
   const index = getIndex(name);
@@ -106,12 +144,12 @@ export const createCard = (name = getLastPersonality()) => {
   return html`
   <style>
     html {
-      --inner-width: 500px;
+      --inner-width: 554px;
 
-      --hanja-font-size: 91px;
-      --meaning-font-size: 18px;
+      --hanja-font-size: 92px;
+      --meaning-font-size: 19px;
 
-      --separator-height: 11px;
+      --separator-height: 0px;
     }
     .element {
       display: flex;

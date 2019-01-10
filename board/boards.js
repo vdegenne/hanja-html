@@ -1159,7 +1159,7 @@ export const board16 = [
   }
 ];
 
-// 和an應v用v
+// 應v用v早n期n
 
 let colorsForFunBoard;
 window.getColorsForFunBoard = () => colorsForFunBoard;
