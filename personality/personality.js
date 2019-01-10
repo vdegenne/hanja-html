@@ -135,6 +135,20 @@ export const personality7 = [
   }
 ];
 
+export const personality8 = [
+  {
+    hj: '歡',
+    meanings: ['huān', '환', 'joyous/happy/pleased']
+  },
+  {
+    hj: '權',
+    meanings: ['quán', '권', 'authority/power/right']
+  },
+  {
+    hj: '拳',
+    meanings: ['quán', '권', 'fist/boxing']
+  }
+];
 
 export const createCard = (name = getLastPersonality()) => {
 
@@ -146,10 +160,14 @@ export const createCard = (name = getLastPersonality()) => {
     html {
       --inner-width: 554px;
 
-      --hanja-font-size: 92px;
-      --meaning-font-size: 19px;
+      --hanja-font-size: 134px;
+      --meaning-font-size: 24px;
 
-      --separator-height: 0px;
+      --separator-height: 18px;
+    }
+    .card {
+      padding: 29px 10px 10px;
+      box-sizing: border-box;
     }
     .element {
       display: flex;
@@ -191,9 +209,9 @@ export const createCard = (name = getLastPersonality()) => {
       align-items: center;
       white-space: nowrap;
 
-      padding: 0 9px;
+      padding: 0 10px;
       margin: 0 3px 4px 0;
-      height: 31px;
+      height: calc(var(--meaning-font-size) + 12px);
 
       font-size: var(--meaning-font-size);
       color: #fff;
